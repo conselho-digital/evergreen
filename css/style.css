@@ -285,22 +285,25 @@ body {
    PARTNERS  (dark wood panel)
    ================================================================ */
 .partners-section {
-  padding: 90px 40px;
+  padding: 90px 0;
   background:
     repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(0,0,0,.025) 80px, rgba(0,0,0,.025) 82px),
     linear-gradient(180deg, var(--wood-dark), var(--wood-mid) 40%, var(--wood-dark));
   border-top: 3px solid var(--wood-high); border-bottom: 3px solid var(--wood-high);
   box-shadow: inset 0 4px 12px rgba(0,0,0,.5), inset 0 -4px 12px rgba(0,0,0,.5);
+  overflow: hidden;
 }
-.wood-panel-inner { max-width: 1200px; margin: 0 auto; }
+.wood-panel-inner { width: 100%; }
 
 /* ticker infinito */
+.partners-section .section-plaque { padding: 0 40px; }
+
 .partners-ticker-wrap {
   overflow: hidden;
   width: 100%;
   /* fade nas bordas */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  mask-image:         linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image:         linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
 .partners-ticker {
   display: flex;
