@@ -784,6 +784,16 @@ body {
 .swiper-button-next:hover { transform: translateY(-1px); }
 .swiper-button-prev:active,
 .swiper-button-next:active { transform: translateY(1px); border-bottom-width: 1px; box-shadow: 0 1px 3px rgba(0,0,0,.5), inset 0 2px 4px rgba(0,0,0,.4); }
+
+/* setas do portfólio: menores e na altura da foto */
+.portfolio-swiper .swiper-button-prev,
+.portfolio-swiper .swiper-button-next {
+  width: 30px !important; height: 30px !important;
+  top: 28% !important;
+  border-radius: 3px;
+}
+.portfolio-swiper .swiper-button-prev::after,
+.portfolio-swiper .swiper-button-next::after { font-size: 11px !important; }
 .swiper-pagination-bullet { background: var(--parch-dark) !important; opacity: .5 !important; width: 10px !important; height: 10px !important; }
 .swiper-pagination-bullet-active { background: var(--gold-light) !important; opacity: 1 !important; box-shadow: 0 0 6px rgba(201,162,39,.5) !important; }
 
