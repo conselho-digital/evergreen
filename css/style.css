@@ -196,11 +196,11 @@ body {
 .hero {
   position: relative; min-height: 100vh; display: flex;
   align-items: center; justify-content: center; padding-top: 68px;
-  background: #fff;
+  background: #000;
   overflow: hidden;
 }
 
-/* ── Vídeo de fundo ── */
+/* ── Vídeo fullscreen de fundo ── */
 .hero-video-bg {
   position: absolute; inset: 0; z-index: 0; overflow: hidden;
 }
@@ -208,17 +208,17 @@ body {
   position: absolute;
   top: 50%; left: 50%;
   width: 100vw;
-  height: 56.25vw;   /* 16:9 */
+  height: 56.25vw;
   min-height: 100vh;
   min-width: 177.78vh;
   transform: translate(-50%, -50%);
   border: none; pointer-events: none;
 }
 
-/* overlay branco sobre o vídeo para clarear */
+/* overlay escuro leve para legibilidade — vídeo bem visível */
 .hero-video-overlay {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: rgba(255,255,255,.55);
+  background: rgba(0,0,0,.42);
 }
 
 /* ── Conteúdo ── */
@@ -229,29 +229,30 @@ body {
 
 /* logo da empresa */
 .hero-logo-img {
-  width: 130px; height: 130px; object-fit: contain; margin: 0 auto 16px;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,.18));
+  width: 140px; height: 140px; object-fit: contain; margin: 0 auto 18px;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,.6)) brightness(1.05);
 }
 
 .hero-title {
-  font-family: var(--font-display); line-height: 1; letter-spacing: 10px; margin-bottom: 4px;
+  font-family: var(--font-display); line-height: 1; letter-spacing: 10px; margin-bottom: 6px;
   font-size: clamp(2.2rem, 6vw, 4rem);
-  background: linear-gradient(180deg, #4a7c59 0%, var(--green-mid) 50%, var(--green-dark) 100%);
+  background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold-light) 50%, var(--gold-mid) 100%);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(1px 2px 4px rgba(0,0,0,.15));
+  filter: drop-shadow(1px 3px 6px rgba(0,0,0,.9));
 }
 .hero-subtitle {
   font-family: var(--font-display); letter-spacing: 8px; margin-bottom: 18px;
-  font-size: clamp(.75rem, 1.8vw, 1.05rem); color: var(--green-accent);
-  text-shadow: 1px 1px 2px rgba(0,0,0,.1);
+  font-size: clamp(.75rem, 1.8vw, 1.05rem); color: var(--green-hi);
+  text-shadow: 1px 1px 3px rgba(0,0,0,.8);
 }
 .hero-tagline {
   font-family: var(--font-serif); font-style: italic; margin-bottom: 28px;
-  font-size: clamp(.82rem, 1.5vw, 1rem); color: #555;
+  font-size: clamp(.82rem, 1.5vw, 1rem); color: var(--parch-mid);
+  text-shadow: 1px 1px 2px rgba(0,0,0,.7);
 }
 .hero-divider {
   width: 160px; height: 2px; margin: 0 auto 28px;
-  background: linear-gradient(90deg, transparent, var(--green-accent), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
 }
 .hero-stats-row {
   display: flex; align-items: center; justify-content: center; gap: 20px;
@@ -260,19 +261,20 @@ body {
 .hero-stat { text-align: center; }
 .hero-stat-value {
   display: block; font-family: 'Courier New', monospace; font-size: 1.5rem; font-weight: 700;
-  color: var(--green-mid); letter-spacing: 1px;
+  color: var(--green-hi); text-shadow: 0 0 10px rgba(122,186,138,.5);
+  letter-spacing: 1px;
 }
-.hero-stat-label { font-size: .68rem; letter-spacing: 1px; text-transform: uppercase; color: #777; }
-.hero-stat-sep   { color: var(--green-accent); font-size: 1.2rem; opacity: .5; }
+.hero-stat-label { font-size: .68rem; letter-spacing: 1px; text-transform: uppercase; color: var(--parch-dark); }
+.hero-stat-sep   { color: var(--gold-dark); font-size: 1.2rem; opacity: .5; }
 
 .hero-scroll {
   position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
   text-align: center; font-size: .68rem; letter-spacing: 2px; text-transform: uppercase;
-  color: #888; opacity: .8; z-index: 2;
+  color: var(--parch-dark); opacity: .75; z-index: 2;
 }
 .scroll-arrow {
   width: 16px; height: 16px; margin: 7px auto 0;
-  border-right: 2px solid #aaa; border-bottom: 2px solid #aaa;
+  border-right: 2px solid var(--parch-dark); border-bottom: 2px solid var(--parch-dark);
   transform: rotate(45deg);
   animation: scrollBounce 1.6s ease-in-out infinite;
 }
