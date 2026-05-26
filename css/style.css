@@ -224,7 +224,12 @@ body {
 /* ── Conteúdo ── */
 .hero-content {
   position: relative; z-index: 2; text-align: center;
-  padding: 40px 20px; max-width: 760px;
+  padding: 48px 56px; max-width: 760px;
+  background: rgba(255,255,255,0.82);
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
 }
 
 /* logo da empresa */
