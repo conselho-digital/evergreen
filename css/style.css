@@ -34,7 +34,7 @@
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 img  { display: block; max-width: 100%; }
 
 body {
@@ -852,7 +852,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .navbar { padding: 0 16px; overflow: visible; }
+  .navbar { padding: 0 16px; overflow: visible; max-width: 100vw; }
 
   /* oculta texto do logo — só exibe a imagem */
   .logo-text-wrap { display: none; }
