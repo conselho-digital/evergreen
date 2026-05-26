@@ -307,11 +307,10 @@ body {
 }
 .partners-ticker {
   display: flex;
-  gap: 28px;
+  gap: 32px;
   width: max-content;
-  animation: ticker-scroll 22s linear infinite;
+  animation: ticker-scroll 18s linear infinite;
 }
-.partners-ticker:hover { animation-play-state: paused; }
 
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
@@ -319,8 +318,8 @@ body {
 }
 
 .partner-card {
-  flex: 0 0 260px;
-  padding: 32px 24px; text-align: center; border-radius: 6px;
+  flex: 0 0 clamp(280px, 70vw, 420px);
+  padding: 40px 32px; text-align: center; border-radius: 6px;
   background:
     radial-gradient(ellipse at 30% 25%, rgba(255,255,255,.07) 0%, transparent 55%),
     linear-gradient(145deg, var(--wood-high), var(--wood-light) 40%, var(--wood-mid) 80%, var(--wood-dark));
