@@ -46,7 +46,7 @@ new Swiper('.portfolio-swiper', {
   loop: true,
   pagination: { el: '.portfolio-swiper .swiper-pagination', clickable: true },
   navigation: { prevEl: '.portfolio-swiper .swiper-button-prev', nextEl: '.portfolio-swiper .swiper-button-next' },
-  breakpoints: { 800: { slidesPerView: 1.6 }, 1100: { slidesPerView: 2 } },
+  breakpoints: { 800: { slidesPerView: 1.18 }, 1100: { slidesPerView: 1.48 } },
 });
 
 // ── Gallery Lightbox ────────────────────────────────────────────
