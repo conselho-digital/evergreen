@@ -518,6 +518,31 @@ body {
 .pin-yellow { background: radial-gradient(circle at 35% 35%, #ffe07c, #ccaa22 50%, #887700); }
 
 /* ================================================================
+   CTA BANNER
+   ================================================================ */
+.cta-section {
+  padding: 72px 40px;
+  text-align: center;
+  background:
+    repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255,255,255,.015) 20px, rgba(255,255,255,.015) 21px),
+    linear-gradient(180deg, var(--green-dark) 0%, #0d2a18 50%, var(--green-dark) 100%);
+  border-top: 4px solid var(--green-accent); border-bottom: 4px solid var(--green-accent);
+}
+.cta-inner { max-width: 700px; margin: 0 auto; }
+.cta-question {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.3rem); color: var(--parch-mid);
+  margin-bottom: 10px;
+  text-shadow: 0 0 12px rgba(0,0,0,.8), 0 1px 3px rgba(0,0,0,.9);
+}
+.cta-headline {
+  font-family: var(--font-display); text-transform: uppercase;
+  font-size: clamp(1.6rem, 4vw, 2.8rem); letter-spacing: 4px;
+  color: var(--gold-light); margin-bottom: 36px;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,1));
+}
+
+/* ================================================================
    ABOUT  (leather-bound book)
    ================================================================ */
 .about-section {
