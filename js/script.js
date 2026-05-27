@@ -39,6 +39,17 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+// ── Swiper — Gallery ───────────────────────────────────────────
+new Swiper('.gallery-swiper', {
+  slidesPerView: 1,
+  spaceBetween: 24,
+  loop: false,
+  grabCursor: true,
+  pagination: { el: '.gallery-pagination', clickable: true },
+  navigation: { prevEl: '.gallery-prev', nextEl: '.gallery-next' },
+  breakpoints: { 768: { slidesPerView: 3, spaceBetween: 32 } },
+});
+
 // ── Swiper — Portfolio ──────────────────────────────────────────
 new Swiper('.portfolio-swiper', {
   slidesPerView: 1,

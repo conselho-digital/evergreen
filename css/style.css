@@ -402,6 +402,9 @@ body {
 }
 
 /* painel de cortiça */
+.gallery-swiper { max-width: 1280px; margin: 0 auto !important; padding-bottom: 48px !important; }
+.gallery-swiper .swiper-slide { height: auto; }
+
 .gallery-corkboard {
   max-width: 1280px; margin: 0 auto;
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -891,7 +894,6 @@ body {
   .timeline-scroll     { grid-template-columns: repeat(4,1fr); }
 }
 @media (max-width: 900px) {
-  .gallery-corkboard { grid-template-columns: 1fr; }
   .gallery-phase     { border-right: none; border-bottom: 3px solid rgba(0,0,0,.35); }
   .gallery-phase:last-child { border-bottom: none; }
   .phase-label       { position: static; }
