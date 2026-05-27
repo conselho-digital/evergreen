@@ -284,6 +284,11 @@ body {
   border-top: 4px solid var(--gold-mid); border-bottom: 4px solid var(--gold-mid);
   text-align: center;
 }
+.before-after-section .section-subtitle {
+  font-family: var(--font-serif); font-style: italic; font-size: 1.05rem; line-height: 1.7;
+  color: #4a3520; text-shadow: none; margin-top: -28px; margin-bottom: 40px;
+  max-width: 700px; margin-left: auto; margin-right: auto;
+}
 
 .ba-features {
   display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;
