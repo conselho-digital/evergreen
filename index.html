@@ -54,16 +54,8 @@
   <!-- ========== HERO ========== -->
   <section class="hero" id="inicio">
 
-    <!-- Vídeo de fundo -->
-    <div class="hero-video-bg">
-      <iframe
-        src="https://player.vimeo.com/video/1195066852?background=1&autoplay=1&muted=1&loop=1&controls=0&title=0&byline=0&portrait=0"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-    <div class="hero-video-overlay"></div>
+    <!-- Fundo -->
+    <div class="hero-img-bg"></div>
 
     <div class="hero-content">
       <img
@@ -71,7 +63,7 @@
         alt="Evergreen Gramaverde"
         class="hero-logo-img">
       <h1 class="hero-title">EVERGREEN</h1>
-      <p class="hero-subtitle">G R A M A V E R D E</p>
+      <p class="hero-subtitle">HIDROSSEMEADURA</p>
       <p class="hero-tagline">Convertendo Desafios Ambientais em Valor Sustentável</p>
       <div class="hero-divider"></div>
       <div class="hero-stats-row">
@@ -93,9 +85,57 @@
       <a href="#contato" class="btn-primary">Solicitar Orçamento</a>
     </div>
 
-    <div class="hero-scroll">
-      <span>Role para explorar</span>
-      <div class="scroll-arrow"></div>
+  </section>
+
+  <!-- ========== ANTES & DEPOIS ========== -->
+  <section class="before-after-section" id="antes-depois">
+    <div class="section-plaque light">
+      <h2>A Técnica Mais Usada nos EUA</h2>
+    </div>
+    <p class="section-subtitle">Rápida na aplicação, eficiente nos resultados — a hidrossemeadura transforma áreas degradadas em tapetes verdes em poucos dias.</p>
+
+    <div class="ba-features">
+      <div class="ba-feature"><span class="ba-icon">⚡</span><span>Aplicação em horas</span></div>
+      <div class="ba-feature"><span class="ba-icon">🌱</span><span>Brotos em 5–7 dias</span></div>
+      <div class="ba-feature"><span class="ba-icon">🛡️</span><span>Controle de erosão imediato</span></div>
+      <div class="ba-feature"><span class="ba-icon">💧</span><span>Retenção de umidade</span></div>
+    </div>
+
+    <div class="ba-grid">
+
+      <div class="ba-pair">
+        <div class="ba-card">
+          <img src="img/before-hydroseed.webp" alt="Antes da hidrossemeadura — solo exposto" loading="lazy">
+          <div class="ba-label ba-label--before">ANTES</div>
+        </div>
+        <div class="ba-card">
+          <img src="img/after-hydroseed.webp" alt="Depois da hidrossemeadura — tapete verde" loading="lazy">
+          <div class="ba-label ba-label--after">DEPOIS</div>
+        </div>
+      </div>
+
+      <div class="ba-pair">
+        <div class="ba-card">
+          <img src="img/before-hydroseed-2.webp" alt="Antes — área recém hidrossemeada" loading="lazy">
+          <div class="ba-label ba-label--before">ANTES</div>
+        </div>
+        <div class="ba-card">
+          <img src="img/after-hydroseed-2.webp" alt="Depois — gramado estabelecido" loading="lazy">
+          <div class="ba-label ba-label--after">DEPOIS</div>
+        </div>
+      </div>
+
+      <div class="ba-pair">
+        <div class="ba-card">
+          <img src="img/before-hydroseed-3.webp" alt="Antes — talude exposto" loading="lazy">
+          <div class="ba-label ba-label--before">ANTES</div>
+        </div>
+        <div class="ba-card">
+          <img src="img/after-hydroseed-3.webp" alt="Depois — controle de erosão com raízes profundas" loading="lazy">
+          <div class="ba-label ba-label--after">DEPOIS</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -182,9 +222,11 @@
       <h2>Galeria de Projetos</h2>
     </div>
 
-    <div class="gallery-corkboard">
+    <div class="swiper gallery-swiper">
+      <div class="swiper-wrapper">
 
       <!-- ── FASE 1: ANTES ── -->
+      <div class="swiper-slide">
       <div class="gallery-phase">
         <div class="phase-label phase-label--before">
           <span class="phase-num">01</span>
@@ -243,7 +285,10 @@
         </div>
       </div>
 
+      </div></div><!-- /slide 1 -->
+
       <!-- ── FASE 2: APLICAÇÃO ── -->
+      <div class="swiper-slide">
       <div class="gallery-phase">
         <div class="phase-label phase-label--during">
           <span class="phase-num">02</span>
@@ -310,7 +355,10 @@
         </div>
       </div>
 
+      </div></div><!-- /slide 2 -->
+
       <!-- ── FASE 3: RESULTADO ── -->
+      <div class="swiper-slide">
       <div class="gallery-phase">
         <div class="phase-label phase-label--after">
           <span class="phase-num">03</span>
@@ -368,7 +416,12 @@
 
         </div>
       </div>
+      </div></div><!-- /slide 3 -->
 
+      </div><!-- /swiper-wrapper -->
+      <div class="swiper-button-prev gallery-prev"></div>
+      <div class="swiper-button-next gallery-next"></div>
+      <div class="swiper-pagination gallery-pagination"></div>
     </div>
   </section>
 
@@ -386,7 +439,7 @@
               Convertendo desafios ambientais em valor sustentável.
             </p>
             <p>
-              A <strong>Evergreen Gramaverde</strong> é especialista em hidrossemeadura — a técnica mais eficiente para revegetação em larga escala. Através de uma mistura de sementes, fertilizantes, mulch e água, aplicada sob pressão sobre o solo exposto, criamos uma biomembrana que protege e regenera o ambiente.
+              A <strong>Evergreen Hidrossemeadura</strong> é especialista em hidrossemeadura — a técnica mais eficiente para revegetação em larga escala. Através de uma mistura de sementes, fertilizantes, mulch e água, aplicada sob pressão sobre o solo exposto, criamos uma biomembrana que protege e regenera o ambiente.
             </p>
             <p>
               Atendemos infraestrutura, mineração, agronegócio e engenharia civil com foco total em ESG e conformidade ambiental. Nossos projetos cobrem taludes críticos, áreas industriais degradadas, margens de rodovias e zonas urbanas.
@@ -448,12 +501,11 @@
   <!-- ========== FASES ========== -->
   <section class="after-section" id="aplicacao">
     <div class="section-plaque">
-      <h2>Fases</h2>
+      <h2>Processo de Germinação</h2>
     </div>
     <p class="section-subtitle">Como a hidrossemeadura age no solo e transforma áreas degradadas em tapetes verdes.</p>
 
-    <div class="process-board">
-      <div class="board-frame-inner">
+    <div class="board-frame-inner">
 
         <div class="index-card index-card--img">
           <div class="card-number">01</div>
@@ -491,7 +543,6 @@
           </div>
         </div>
 
-      </div>
     </div>
   </section>
 
@@ -656,20 +707,9 @@
 
         <div class="footer-divider-v"></div>
 
-        <div class="footer-links">
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener">
-            <i class="fab fa-instagram"></i> Instagram
-          </a>
-          <a href="https://wa.me/5519989455715" target="_blank" rel="noopener">
-            <i class="fab fa-whatsapp"></i> WhatsApp
-          </a>
-        </div>
-
-        <div class="footer-divider-v"></div>
-
         <div class="footer-credits">
           <p>© 2024 Evergreen Gramaverde</p>
-          <p>Desenvolvido por <a href="#" target="_blank">Conselho Digital</a></p>
+          <p>Desenvolvido por <a href="https://conselhodigital.com" target="_blank" rel="noopener">Conselho Digital</a></p>
         </div>
       </div>
     </div>

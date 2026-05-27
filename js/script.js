@@ -39,11 +39,23 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+// ── Swiper — Gallery ───────────────────────────────────────────
+new Swiper('.gallery-swiper', {
+  slidesPerView: 1,
+  spaceBetween: 24,
+  loop: false,
+  grabCursor: true,
+  pagination: { el: '.gallery-pagination', clickable: true },
+  navigation: { prevEl: '.gallery-prev', nextEl: '.gallery-next' },
+  breakpoints: { 768: { slidesPerView: 3, spaceBetween: 32 } },
+});
+
 // ── Swiper — Portfolio ──────────────────────────────────────────
 new Swiper('.portfolio-swiper', {
   slidesPerView: 1,
   spaceBetween: 28,
   loop: true,
+  centeredSlides: true,
   pagination: { el: '.portfolio-swiper .swiper-pagination', clickable: true },
   navigation: { prevEl: '.portfolio-swiper .swiper-button-prev', nextEl: '.portfolio-swiper .swiper-button-next' },
   breakpoints: { 800: { slidesPerView: 1.18 }, 1100: { slidesPerView: 1.48 } },
@@ -104,5 +116,5 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll(
-  '.partner-card, .gallery-item, .timeline-card, .index-card, .portfolio-card, .gauge-body, .contact-item'
+  '.gallery-item, .timeline-card, .index-card, .portfolio-card, .gauge-body, .contact-item'
 ).forEach(el => { el.classList.add('anim-target'); io.observe(el); });
