@@ -986,7 +986,7 @@ body {
   .portfolio-section .section-plaque { margin-bottom: 16px; }
 }
 @media (min-width: 769px) {
-  .hero-content { transform: scale(1.75); transform-origin: center center; }
+  .hero-content { transform: scale(1.575); transform-origin: center center; }
 }
 
 @media (max-width: 520px) {
