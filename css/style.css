@@ -197,8 +197,8 @@ body {
    HERO  (fundo branco + vídeo background)
    ================================================================ */
 .hero {
-  position: relative; height: 100vh; max-height: 100vh; display: flex;
-  align-items: center; justify-content: center; padding-top: 68px;
+  position: relative; height: 100vh; height: 100dvh; max-height: 100vh; max-height: 100dvh;
+  display: flex; align-items: center; justify-content: center; padding-top: 68px;
   background: #000;
   overflow: hidden;
 }
