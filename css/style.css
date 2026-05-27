@@ -414,13 +414,8 @@ body {
   width: max(100%, 1080px);
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 0;
-  background:
-    repeating-linear-gradient(0deg,   transparent, transparent 5px, rgba(160,120,70,.04) 5px, rgba(160,120,70,.04) 6px),
-    repeating-linear-gradient(90deg,  transparent, transparent 5px, rgba(140,100,50,.03) 5px, rgba(140,100,50,.03) 6px),
-    radial-gradient(circle at 20% 30%, rgba(180,130,80,.06) 0%, transparent 45%),
-    linear-gradient(135deg, #2a1e12, #1e1409 50%, #2a1e12);
+  background: transparent;
   border-radius: 6px;
-  box-shadow: inset 0 0 50px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
   overflow: hidden;
 }
 
@@ -941,7 +936,7 @@ body {
   .gallery-section    { padding: 60px 0 60px; }
   .gallery-section .section-plaque { padding: 0 20px; }
   .phase-label       { position: static; }
-  .phase-col         { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; padding: 20px; }
+  .phase-col         { display: flex; flex-direction: column; gap: 20px; padding: 16px; }
 }
 
 @media (max-width: 768px) {
