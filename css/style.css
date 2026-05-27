@@ -174,7 +174,7 @@ body {
   background: linear-gradient(180deg, var(--green-hi) 0%, var(--green-accent) 40%, var(--green-light) 100%);
   border-bottom: 3px solid var(--green-dark);
   box-shadow: 0 6px 12px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.25), inset 0 -2px 4px rgba(0,0,0,.3);
-  text-shadow: 0 0 15px #000, 0 0 33px #000, 0 1px 2px #000;
+  text-shadow: 0 0 8px rgba(0,0,0,.95), 0 0 20px rgba(0,0,0,.8), 0 1px 2px rgba(0,0,0,.95);
   transition: transform .15s, box-shadow .15s;
 }
 .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.25); }
@@ -219,7 +219,7 @@ body {
 /* logo da empresa */
 .hero-logo-img {
   width: 140px; height: 140px; object-fit: contain; margin: 0 auto 18px;
-  filter: drop-shadow(0 0 12px rgba(0,0,0,1)) drop-shadow(0 0 36px rgba(0,0,0,1)) drop-shadow(0 0 72px rgba(0,0,0,.9)) brightness(1.05);
+  filter: drop-shadow(0 0 8px rgba(0,0,0,.95)) drop-shadow(0 0 20px rgba(0,0,0,.8)) drop-shadow(0 0 38px rgba(0,0,0,.55)) brightness(1.05);
 }
 
 .hero-title {
@@ -227,17 +227,17 @@ body {
   font-size: clamp(2.2rem, 6vw, 4rem);
   background: linear-gradient(180deg, var(--gold-hi) 0%, var(--gold-light) 50%, var(--gold-mid) 100%);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 12px rgba(0,0,0,1)) drop-shadow(0 0 36px rgba(0,0,0,1)) drop-shadow(0 0 72px rgba(0,0,0,.9));
+  filter: drop-shadow(0 0 8px rgba(0,0,0,.95)) drop-shadow(0 0 20px rgba(0,0,0,.8)) drop-shadow(0 0 38px rgba(0,0,0,.55));
 }
 .hero-subtitle {
   font-family: var(--font-display); letter-spacing: 3px; margin-bottom: 18px;
   font-size: clamp(1rem, 3vw, 1.4rem); color: var(--green-hi); white-space: nowrap;
-  text-shadow: 0 0 15px #000, 0 0 33px #000, 0 0 60px #000, 0 2px 4px #000;
+  text-shadow: 0 0 8px rgba(0,0,0,.95), 0 0 20px rgba(0,0,0,.8), 0 0 38px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.95);
 }
 .hero-tagline {
   font-family: var(--font-serif); font-style: italic; margin-bottom: 28px;
   font-size: clamp(.9rem, 1.8vw, 1.1rem); color: var(--parch-mid);
-  text-shadow: 0 0 15px #000, 0 0 33px #000, 0 0 60px #000, 0 2px 4px #000;
+  text-shadow: 0 0 8px rgba(0,0,0,.95), 0 0 20px rgba(0,0,0,.8), 0 0 38px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.95);
 }
 .hero-divider {
   width: 160px; height: 2px; margin: 0 auto 28px;
@@ -251,10 +251,10 @@ body {
 .hero-stat-value {
   display: block; font-family: 'Courier New', monospace; font-size: 1.5rem; font-weight: 700;
   color: var(--green-hi); letter-spacing: 1px;
-  text-shadow: 0 0 15px #000, 0 0 33px #000, 0 0 60px #000, 0 0 10px rgba(122,186,138,.4);
+  text-shadow: 0 0 8px rgba(0,0,0,.95), 0 0 20px rgba(0,0,0,.8), 0 0 38px rgba(0,0,0,.55), 0 0 10px rgba(122,186,138,.4);
 }
-.hero-stat-label { font-size: .68rem; letter-spacing: 1px; text-transform: uppercase; color: var(--parch-dark); text-shadow: 0 0 15px #000, 0 0 33px #000, 0 0 60px #000; }
-.hero-stat-sep   { color: var(--gold-dark); font-size: 1.2rem; opacity: .7; text-shadow: 0 0 15px #000, 0 0 33px #000; }
+.hero-stat-label { font-size: .68rem; letter-spacing: 1px; text-transform: uppercase; color: var(--parch-dark); text-shadow: 0 0 8px rgba(0,0,0,.95), 0 0 20px rgba(0,0,0,.8), 0 0 38px rgba(0,0,0,.55); }
+.hero-stat-sep   { color: var(--gold-dark); font-size: 1.2rem; opacity: .7; text-shadow: 0 0 8px rgba(0,0,0,.95), 0 0 20px rgba(0,0,0,.8); }
 
 .hero-scroll {
   position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
