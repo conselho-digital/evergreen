@@ -952,6 +952,10 @@ body {
   .portfolio-section  { padding: 36px 16px 40px; }
   .portfolio-section .section-plaque { margin-bottom: 16px; }
 }
+@media (min-width: 769px) {
+  .hero-content { transform: scale(1.75); transform-origin: center center; }
+}
+
 @media (max-width: 520px) {
   .timeline-scroll { grid-template-columns: 1fr 1fr; }
   .hero-stats-row  { flex-direction: column; gap: 14px; }
