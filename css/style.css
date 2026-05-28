@@ -209,6 +209,9 @@ body {
   background: url('../img/hero-bg.png') center center / cover no-repeat;
   filter: brightness(0.72);
 }
+@media (min-width: 769px) {
+  .hero-img-bg { background-position: 70% 20%; }
+}
 
 /* ── Conteúdo ── */
 .hero-content {
