@@ -45,13 +45,24 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "LocalBusiness",
+        "@type": "WebSite",
+        "@id": "https://evergreengrama.com.br/#website",
+        "url": "https://evergreengrama.com.br",
+        "name": "Evergreen Gramaverde",
+        "description": "Hidrossemeadura, plantio e venda de grama em Campinas-SP e região.",
+        "inLanguage": "pt-BR",
+        "publisher": { "@id": "#evergreen-gramaverde" }
+      },
+      {
+        "@type": ["LocalBusiness", "LandscapingBusiness"],
         "@id": "#evergreen-gramaverde",
         "name": "Evergreen Gramaverde",
-        "description": "Empresa especializada em hidrossemeadura, plantio e venda de grama em Campinas-SP e região.",
+        "description": "Empresa especializada em hidrossemeadura, plantio e venda de grama em Campinas-SP e região. Atendemos obras civis, taludes, mineração e agronegócio.",
         "telephone": "+55-19-98945-5715",
         "email": "contato@evergreengrama.com.br",
         "url": "https://evergreengrama.com.br",
+        "image": "https://evergreengrama.com.br/img/contato.jpg",
+        "logo": "https://evergreengrama.com.br/img/logo.png",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Campinas",
@@ -64,8 +75,17 @@
           "longitude": -47.0608
         },
         "areaServed": [
-          "Campinas", "Jundiaí", "Sorocaba", "Piracicaba",
-          "Ribeirão Preto", "São Paulo", "Interior de São Paulo"
+          { "@type": "City", "name": "Campinas" },
+          { "@type": "City", "name": "Jundiaí" },
+          { "@type": "City", "name": "Sorocaba" },
+          { "@type": "City", "name": "Piracicaba" },
+          { "@type": "City", "name": "Ribeirão Preto" },
+          { "@type": "City", "name": "Limeira" },
+          { "@type": "City", "name": "Americana" },
+          { "@type": "City", "name": "Indaiatuba" },
+          { "@type": "City", "name": "Valinhos" },
+          { "@type": "City", "name": "Vinhedo" },
+          { "@type": "State", "name": "São Paulo" }
         ],
         "priceRange": "$$",
         "openingHoursSpecification": [
@@ -82,18 +102,27 @@
             "closes": "12:00"
           }
         ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+55-19-98945-5715",
+          "contactType": "customer service",
+          "availableLanguage": "Portuguese",
+          "contactOption": "TollFree"
+        },
         "sameAs": [
           "https://wa.me/5519989455715"
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
-          "name": "Serviços de Revegetação",
+          "name": "Serviços de Revegetação e Gramado",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hidrossemeadura" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Plantio de Grama" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Venda de Grama" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Controle de Erosão" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revegetação de Taludes" } }
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hidrossemeadura", "description": "Aplicação hidráulica de sementes, fertilizante e mulch para revegetação rápida de grandes áreas." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hidrossemeadura em Taludes", "description": "Estabilização e revegetação de taludes rodoviários, ferroviários e de mineração." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Controle de Erosão", "description": "Proteção do solo contra erosão por chuva e vento com cobertura vegetal uniforme." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Plantio de Grama em Placas", "description": "Instalação de grama em placas para jardins residenciais, comerciais e campos esportivos." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Venda de Grama", "description": "Fornecimento de grama esmeralda, bermuda, batatais e outras espécies." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revegetação de Áreas Industriais", "description": "Restauração de áreas degradadas por atividades industriais e mineração." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Revegetação de Zonas Urbanas", "description": "Implantação de gramados e áreas verdes em parques, praças e espaços públicos." } }
           ]
         }
       },
@@ -105,7 +134,39 @@
             "name": "O que é hidrossemeadura?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Hidrossemeadura é uma técnica de revegetação que projeta uma mistura de sementes, água, fertilizante e cobertura protetora sobre o solo, ideal para taludes, áreas degradadas e controle de erosão."
+              "text": "Hidrossemeadura é uma técnica de revegetação hidráulica que projeta sobre o solo uma mistura fluida de sementes, água, fertilizante, mulch de fibra e fixador. É ideal para taludes, áreas degradadas e controle de erosão, garantindo cobertura uniforme em terrenos de difícil acesso."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quanto tempo leva para aparecerem os primeiros brotos após a hidrossemeadura?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Os primeiros brotos aparecem entre 5 e 7 dias após a aplicação. A cobertura completa do solo ocorre em torno de 30 dias, dependendo das condições climáticas, espécie de semente e irrigação."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "A hidrossemeadura funciona em taludes e encostas íngremes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim. A hidrossemeadura em taludes é uma das aplicações mais comuns e eficientes da técnica. O fixador presente na mistura adere ao solo inclinado, criando uma camada protetora que previne erosão e deslizamentos enquanto a vegetação se desenvolve."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "A hidrossemeadura serve para controle de erosão?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim. A cobertura vegetal criada pela hidrossemeadura protege o solo da ação erosiva da chuva e do vento imediatamente após a aplicação, pois o mulch de fibra forma uma capa protetora antes mesmo da germinação das sementes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quais tipos de obras podem usar hidrossemeadura?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A hidrossemeadura é indicada para obras civis (rodovias, ferrovias, loteamentos), mineração, áreas industriais, agronegócio, revegetação urbana, jardins de grandes extensões e quaisquer terrenos que necessitem de cobertura vegetal rápida e eficiente."
             }
           },
           {
@@ -113,23 +174,23 @@
             "name": "Quais regiões a Evergreen Gramaverde atende?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Atendemos Campinas e região, incluindo Jundiaí, Sorocaba, Piracicaba, Ribeirão Preto e todo o interior de São Paulo."
+              "text": "Atendemos Campinas e toda a região metropolitana, incluindo Jundiaí, Sorocaba, Piracicaba, Ribeirão Preto, Limeira, Americana, Indaiatuba, Valinhos, Vinhedo e demais municípios do interior de São Paulo."
             }
           },
           {
             "@type": "Question",
-            "name": "Quanto tempo leva para a grama crescer após a hidrossemeadura?",
+            "name": "A Evergreen Gramaverde também vende e instala grama em placas?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Os primeiros brotos aparecem entre 7 e 15 dias após a aplicação, dependendo da espécie, temperatura e umidade do solo. A cobertura completa ocorre geralmente em 30 a 60 dias."
+              "text": "Sim! Além da hidrossemeadura, realizamos fornecimento e instalação de grama em placas (esmeralda, bermuda, batatais e outras espécies) para jardins residenciais, comerciais, campos esportivos e condomínios."
             }
           },
           {
             "@type": "Question",
-            "name": "A Evergreen Gramaverde vende e instala grama em placas?",
+            "name": "Como solicitar um orçamento de hidrossemeadura em Campinas?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sim! Além da hidrossemeadura, realizamos venda e instalação de grama em placas para jardins residenciais, comerciais, campos esportivos e áreas externas."
+              "text": "Entre em contato pelo WhatsApp (19) 98945-5715 ou pelo formulário do site. Nossa equipe analisa a área, o tipo de solo e as espécies mais adequadas para apresentar uma proposta personalizada sem compromisso."
             }
           }
         ]
@@ -180,7 +241,7 @@
         src="img/logo.png"
         alt="Evergreen Gramaverde"
         class="hero-logo-img">
-      <h1 class="hero-title">EVERGREEN</h1>
+      <h1 class="hero-title">EVERGREEN<span class="sr-only"> – Hidrossemeadura e Plantio de Grama em Campinas SP</span></h1>
       <p class="hero-subtitle">HIDROSSEMEADURA</p>
       <p class="hero-tagline">Convertendo Desafios Ambientais em Valor Sustentável</p>
       <div class="hero-divider"></div>
@@ -208,7 +269,7 @@
   <!-- ========== ANTES & DEPOIS ========== -->
   <section class="before-after-section" id="antes-depois">
     <div class="section-plaque light">
-      <h2>A Técnica Mais Usada nos EUA</h2>
+      <h2>Hidrossemeadura: A Técnica Mais Usada nos EUA</h2>
     </div>
     <div class="ba-intro-text">
       <p>A hidrossemeadura é um método de plantio hidráulico amplamente utilizado nos Estados Unidos, país onde a técnica surgiu na década de 1940. O processo consiste na pulverização de uma mistura fluida composta por sementes, água, adubo e cobertura protetora diretamente sobre a terra. Essa prática é muito comum para a formação rápida de gramados, contenção de encostas e restauração de solos danificados.</p>
@@ -669,7 +730,7 @@
   <!-- ========== PORTFÓLIO ========== -->
   <section class="portfolio-section" id="portfolio">
     <div class="section-plaque">
-      <h2>Aplicações</h2>
+      <h2>Aplicações da Hidrossemeadura</h2>
     </div>
 
     <div class="swiper portfolio-swiper">
