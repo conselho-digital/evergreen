@@ -918,7 +918,7 @@ body {
 .lightbox-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.92); backdrop-filter: blur(4px); }
 .lightbox-frame-wrap { position: relative; z-index: 1; overflow: visible; }
 .lightbox-wood-frame {
-  padding: 14px;
+  padding: 14px; position: relative;
   background: linear-gradient(135deg, var(--wood-high), var(--wood-light) 25%, var(--wood-mid) 55%, var(--wood-dark) 80%, var(--wood-high));
   box-shadow: 0 0 0 2px var(--wood-dark), 0 20px 60px rgba(0,0,0,.9), inset 0 0 0 1px rgba(255,255,255,.08);
 }
@@ -938,17 +938,18 @@ body {
 #lightbox-img.lb-in-right  { animation: lbInRight  .28s cubic-bezier(.22,.68,0,1.1) forwards; }
 #lightbox-img.lb-in-left   { animation: lbInLeft   .28s cubic-bezier(.22,.68,0,1.1) forwards; }
 .lb-btn {
-  position: absolute; background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
-  border: 1px solid #1a1a1a; color: var(--gold-light); cursor: pointer;
+  position: absolute; background: linear-gradient(135deg, rgba(40,25,10,.85), rgba(20,10,0,.92));
+  border: 1px solid var(--gold-dark); color: var(--gold-light); cursor: pointer;
   border-radius: 4px; font-size: 1.5rem; line-height: 1;
-  box-shadow: 0 2px 4px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.1);
   transition: background .15s, color .15s;
   display: flex; align-items: center; justify-content: center;
+  z-index: 10;
 }
-.lb-btn:hover { background: linear-gradient(135deg, #5a5a5a, #3a3a3a); color: var(--gold-hi); }
+.lb-btn:hover { background: linear-gradient(135deg, rgba(80,55,15,.9), rgba(50,30,5,.95)); color: var(--gold-hi); }
 .lb-close { top: -14px; right: -14px; width: 34px; height: 34px; font-size: .9rem; }
-.lb-prev  { top: 50%; left:  -52px; width: 44px; height: 64px; transform: translateY(-50%); }
-.lb-next  { top: 50%; right: -52px; width: 44px; height: 64px; transform: translateY(-50%); }
+.lb-prev  { top: 50%; left:  12px; width: 44px; height: 64px; transform: translateY(-50%); border-radius: 4px 4px 4px 4px; }
+.lb-next  { top: 50%; right: 12px; width: 44px; height: 64px; transform: translateY(-50%); }
 
 /* ================================================================
    ANIMATIONS

@@ -132,6 +132,23 @@ lightbox.addEventListener('touchend',   e => {
   if (Math.abs(dx) > 48) navigateLb(dx < 0 ? 1 : -1);
 });
 
+// mouse drag
+let lbDragX = 0, lbDragging = false;
+const lbImg2 = document.getElementById('lightbox-img');
+lbImg2.addEventListener('mousedown', e => {
+  lbDragging = true; lbDragX = e.clientX;
+  lbImg2.style.cursor = 'grabbing';
+  e.preventDefault();
+});
+window.addEventListener('mouseup', e => {
+  if (!lbDragging) return;
+  lbDragging = false;
+  lbImg2.style.cursor = 'grab';
+  const dx = e.clientX - lbDragX;
+  if (Math.abs(dx) > 48) navigateLb(dx < 0 ? 1 : -1);
+});
+window.addEventListener('mousemove', e => { if (lbDragging) e.preventDefault(); });
+
 // ── Intersection Observer (fade-in-up) ─────────────────────────
 const io = new IntersectionObserver((entries) => {
   entries.forEach((entry, delay) => {
