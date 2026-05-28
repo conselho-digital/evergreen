@@ -833,7 +833,7 @@ body {
   flex: 0 0 auto; display: flex; align-items: flex-end;
 }
 .cover-mockup-img {
-  max-height: 160px; width: auto;
+  max-height: 480px; width: auto;
   filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
 }
 .cover-title-row {
