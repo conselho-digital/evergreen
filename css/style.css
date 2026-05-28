@@ -861,6 +861,8 @@ body {
   .cover-photo-col { display: flex; align-items: flex-end; overflow: visible; }
   .cover-mockup-img { max-height: 200px; margin-top: -60px; }
   .cover-title-row { align-items: center; text-align: center; justify-content: flex-end; }
+  .cover-title-row h2 { font-size: 1.12rem; letter-spacing: 3px; }
+  .cover-title-row p  { font-size: 0.68rem; }
 }
 
 .notepad-body {
