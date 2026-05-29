@@ -194,3 +194,19 @@ function observeAnimTargets() {
 }
 observeAnimTargets();
 window.observeAnimTargets = observeAnimTargets;
+
+// ── Cookie Consent ──────────────────────────────────────────────
+(function () {
+  var banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  var consent = localStorage.getItem('cookie_consent');
+  if (!consent) banner.hidden = false;
+  document.getElementById('cookie-accept').addEventListener('click', function () {
+    localStorage.setItem('cookie_consent', 'accepted');
+    banner.hidden = true;
+  });
+  document.getElementById('cookie-decline').addEventListener('click', function () {
+    localStorage.setItem('cookie_consent', 'declined');
+    banner.hidden = true;
+  });
+})();
