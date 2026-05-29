@@ -211,6 +211,11 @@
           });
         }
       });
+      // Abre o widget para processar tokens de convite, confirmação e recuperação
+      var hash = window.location.hash;
+      if (hash && (hash.includes('invite_token') || hash.includes('confirmation_token') || hash.includes('recovery_token'))) {
+        window.netlifyIdentity.open();
+      }
     }
   </script>
 </head>
