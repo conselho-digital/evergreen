@@ -1,6 +1,8 @@
 backend:
   name: git-gateway
   branch: main
+  identity_url: https://evergreencd.netlify.app/.netlify/identity
+  gateway_url: https://evergreencd.netlify.app/.netlify/git/github
 
 locale: pt
 media_folder: "img"
