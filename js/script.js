@@ -200,15 +200,18 @@ window.observeAnimTargets = observeAnimTargets;
   var banner = document.getElementById('cookie-banner');
   if (!banner) return;
 
-  // Se o cookie já existe, encerra sem mostrar o banner
-  if (document.cookie.indexOf('cookie_consent=') !== -1) return;
+  var hasConsent = document.cookie.indexOf('cookie_consent=') !== -1;
+  try { if (localStorage.getItem('cookie_consent')) hasConsent = true; } catch (e) {}
 
-  banner.hidden = false;
+  if (hasConsent) return;
+
+  banner.removeAttribute('hidden');
 
   function setConsent(value) {
     var expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
     document.cookie = 'cookie_consent=' + value + '; path=/; expires=' + expires;
-    banner.hidden = true;
+    try { localStorage.setItem('cookie_consent', value); } catch (e) {}
+    banner.style.display = 'none';
   }
 
   document.getElementById('cookie-accept').addEventListener('click', function () {
