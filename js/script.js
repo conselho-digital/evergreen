@@ -200,24 +200,21 @@ window.observeAnimTargets = observeAnimTargets;
   var banner = document.getElementById('cookie-banner');
   if (!banner) return;
 
-  function getCookie(name) {
-    var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-    return m ? m[2] : null;
-  }
-  function setCookie(name, value, days) {
-    var d = new Date();
-    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie = name + '=' + value + ';path=/;expires=' + d.toUTCString() + ';SameSite=Lax';
-  }
+  // Se o cookie já existe, encerra sem mostrar o banner
+  if (document.cookie.indexOf('cookie_consent=') !== -1) return;
 
-  if (!getCookie('cookie_consent')) banner.hidden = false;
+  banner.hidden = false;
+
+  function setConsent(value) {
+    var expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = 'cookie_consent=' + value + '; path=/; expires=' + expires;
+    banner.hidden = true;
+  }
 
   document.getElementById('cookie-accept').addEventListener('click', function () {
-    setCookie('cookie_consent', 'accepted', 365);
-    banner.hidden = true;
+    setConsent('accepted');
   });
   document.getElementById('cookie-decline').addEventListener('click', function () {
-    setCookie('cookie_consent', 'declined', 365);
-    banner.hidden = true;
+    setConsent('declined');
   });
 })();
