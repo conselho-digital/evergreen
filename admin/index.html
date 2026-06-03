@@ -538,14 +538,20 @@
     </div>
     <form id="login-form">
       <label class="login-label" for="token-input">Cole o Token de desenvolvedor para entrar</label>
-      <input
-        id="token-input"
-        type="password"
-        class="login-input"
-        placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx"
-        autocomplete="off"
-        spellcheck="false"
-      >
+      <div style="position:relative">
+        <input
+          id="token-input"
+          type="password"
+          class="login-input"
+          placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx"
+          autocomplete="off"
+          spellcheck="false"
+          style="padding-right:44px"
+        >
+        <button type="button" id="toggle-token-btn"
+          onclick="(function(){var i=document.getElementById('token-input'),b=document.getElementById('toggle-token-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'👁':'🙈';})()"
+          style="position:absolute;right:0;top:0;bottom:0;width:40px;background:none;border:none;cursor:pointer;font-size:16px;color:#999;display:flex;align-items:center;justify-content:center;">👁</button>
+      </div>
       <button type="submit" id="login-btn" class="login-btn">Entrar</button>
       <div id="login-error" class="login-error"></div>
     </form>
