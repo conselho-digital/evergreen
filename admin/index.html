@@ -524,6 +524,23 @@
             </div>
           </div>
 
+          <!-- ANTES & DEPOIS -->
+          <div class="accordion-item" data-section="antes-depois">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span class="tab-icon">↔</span>
+              <span class="accordion-title">Antes &amp; Depois — Técnica</span>
+              <span class="accordion-arrow">▼</span>
+            </div>
+            <div class="accordion-body">
+              <div class="field-group">
+                <label class="field-label" for="ba-title">Título da Seção</label>
+                <input id="ba-title" type="text" class="field-input" placeholder="Hidrossemeadura: A Técnica Mais Usada nos EUA">
+              </div>
+              <span class="quill-label">Texto de Introdução</span>
+              <div class="quill-wrap"><div id="quill-ba-intro"></div></div>
+            </div>
+          </div>
+
           <!-- CTA -->
           <div class="accordion-item" data-section="cta-section">
             <div class="accordion-header" onclick="toggleAccordion(this)">
@@ -643,6 +660,7 @@ let previewReady = false;
 let syncTimer    = null;
 let quillWaLabel = null;
 let quillWaSub   = null;
+let quillBAIntro = null;
 
 /* ================================================================
    CARD TYPES
@@ -662,6 +680,11 @@ const CARD_TYPES = [
    ================================================================ */
 (function init() {
   // Quill editors
+  quillBAIntro = new Quill('#quill-ba-intro', {
+    theme: 'snow',
+    placeholder: 'Texto de introdução da seção…',
+    modules: { toolbar: [['bold', 'italic'], [{ header: [3, false] }], ['clean']] }
+  });
   quillWaLabel = new Quill('#quill-wa-label', {
     theme: 'snow',
     placeholder: 'Texto acima do botão WhatsApp…',
@@ -673,6 +696,7 @@ const CARD_TYPES = [
     modules: { toolbar: [['bold', 'italic'], ['clean']] }
   });
 
+  quillBAIntro.on('text-change', scheduleSyncPreview);
   quillWaLabel.on('text-change', scheduleSyncPreview);
   quillWaSub.on('text-change',   scheduleSyncPreview);
 
@@ -696,7 +720,6 @@ const CARD_TYPES = [
   document.getElementById('preview-iframe').addEventListener('load', () => {
     setTimeout(() => {
       previewReady = true;
-      try { injectPreviewStyles(document.getElementById('preview-iframe').contentDocument); } catch (_) {}
       syncPreview();
     }, 700);
   });
@@ -784,6 +807,9 @@ function populateForm(d) {
   sv('hero-stat3-value', d.hero?.stat3_value || '');
   sv('hero-stat3-label', d.hero?.stat3_label || '');
 
+  sv('ba-title', d.antes_depois?.title || '');
+  if (quillBAIntro) quillBAIntro.root.innerHTML = d.antes_depois?.intro || '';
+
   sv('cta-question', d.cta?.question || '');
   sv('cta-headline', d.cta?.headline || '');
 
@@ -808,6 +834,10 @@ function collectFormValues() {
       stat1_value: gv('hero-stat1-value'), stat1_label: gv('hero-stat1-label'),
       stat2_value: gv('hero-stat2-value'), stat2_label: gv('hero-stat2-label'),
       stat3_value: gv('hero-stat3-value'), stat3_label: gv('hero-stat3-label')
+    },
+    antes_depois: {
+      title: gv('ba-title'),
+      intro: quillBAIntro ? quillBAIntro.root.innerHTML : ''
     },
     cta: { question: gv('cta-question'), headline: gv('cta-headline') },
     contact: {
@@ -996,6 +1026,11 @@ function syncPreview() {
       if (sl[i]) sl[i].textContent = l;
     });
 
+    // Antes & Depois
+    setText(doc, '#antes-depois-title', d.antes_depois.title);
+    const bai = doc.getElementById('antes-depois-intro');
+    if (bai) bai.innerHTML = d.antes_depois.intro;
+
     // CTA
     setText(doc, '.cta-question', d.cta.question);
     setText(doc, '.cta-headline', d.cta.headline);
@@ -1071,31 +1106,50 @@ function renderCardsInPreview(doc, container, cards) {
   }).join('');
 }
 
-function injectPreviewStyles(doc) {
-  if (!doc || doc.getElementById('cms-preview-styles')) return;
-  const s = doc.createElement('style');
-  s.id = 'cms-preview-styles';
-  s.textContent = `
-    @keyframes cms-flash {
-      0%   { outline: 4px solid transparent; outline-offset: 0; }
-      18%  { outline: 4px solid #e53935;     outline-offset: 2px; }
-      36%  { outline: 4px solid transparent; outline-offset: 0; }
-      62%  { outline: 4px solid #e53935;     outline-offset: 2px; }
-      85%  { outline: 4px solid transparent; outline-offset: 0; }
-      100% { outline: 4px solid transparent; }
+function cleanPreviewMarks(doc) {
+  ['cms-flash-overlay', 'cms-editing-badge'].forEach(id => {
+    const el = doc.getElementById(id);
+    if (el) el.remove();
+  });
+}
+
+function doFlash(doc, section) {
+  cleanPreviewMarks(doc);
+  const rect = section.getBoundingClientRect();
+
+  // Fixed-position ring — works regardless of parent overflow:hidden
+  const ov = doc.createElement('div');
+  ov.id = 'cms-flash-overlay';
+  ov.style.cssText =
+    `position:fixed;top:${rect.top}px;left:${rect.left}px;` +
+    `width:${rect.width}px;height:${rect.height}px;` +
+    `border:4px solid #e53935;border-radius:3px;` +
+    `pointer-events:none;z-index:99998;box-sizing:border-box;opacity:1;`;
+  doc.body.appendChild(ov);
+
+  // Flash twice: on→off→on→off
+  [440, 880, 1320, 1760].forEach((delay, i) => {
+    setTimeout(() => {
+      if (ov.parentNode) ov.style.opacity = (i % 2 === 0) ? '0' : '1';
+    }, delay);
+  });
+
+  // After flash: switch to yellow editing ring + badge
+  setTimeout(() => {
+    if (ov.parentNode) {
+      ov.style.opacity  = '1';
+      ov.style.border   = '3px solid #F5C400';
     }
-    .cms-flash   { animation: cms-flash 2.2s ease forwards; }
-    .cms-editing { outline: 3px solid #F5C400 !important; outline-offset: 2px; position: relative; }
-    #cms-editing-badge {
-      position: fixed; bottom: 20px; right: 20px;
-      background: #F5C400; color: #111;
-      padding: 7px 18px; border-radius: 20px;
-      font-size: 13px; font-weight: 700;
-      z-index: 99999; pointer-events: none;
-      box-shadow: 0 2px 14px rgba(0,0,0,.35);
-      font-family: -apple-system, sans-serif;
-    }`;
-  doc.head.appendChild(s);
+    const badge = doc.createElement('div');
+    badge.id = 'cms-editing-badge';
+    badge.textContent = '✏ Editando esta seção';
+    badge.style.cssText =
+      `position:fixed;bottom:20px;right:20px;` +
+      `background:#F5C400;color:#111;padding:7px 18px;border-radius:20px;` +
+      `font-size:13px;font-weight:700;z-index:99999;pointer-events:none;` +
+      `box-shadow:0 2px 14px rgba(0,0,0,.35);font-family:-apple-system,sans-serif;`;
+    doc.body.appendChild(badge);
+  }, 2200);
 }
 
 function scrollPreviewToSection(sectionId) {
@@ -1105,33 +1159,13 @@ function scrollPreviewToSection(sectionId) {
     const doc    = iframe.contentDocument || iframe.contentWindow?.document;
     if (!doc) return;
 
-    // Clean up previous marks
-    doc.querySelectorAll('.cms-editing').forEach(el => el.classList.remove('cms-editing'));
-    doc.querySelectorAll('.cms-flash').forEach(el => el.classList.remove('cms-flash'));
-    const old = doc.getElementById('cms-editing-badge');
-    if (old) old.remove();
+    cleanPreviewMarks(doc);
 
-    injectPreviewStyles(doc);
     const section = doc.getElementById(sectionId);
     if (!section) return;
 
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    setTimeout(() => {
-      try {
-        section.classList.add('cms-flash');
-        setTimeout(() => {
-          try {
-            section.classList.remove('cms-flash');
-            section.classList.add('cms-editing');
-            const badge = doc.createElement('div');
-            badge.id = 'cms-editing-badge';
-            badge.textContent = '✏ Editando esta seção';
-            doc.body.appendChild(badge);
-          } catch (_) {}
-        }, 2200);
-      } catch (_) {}
-    }, 700);
+    setTimeout(() => { try { doFlash(doc, section); } catch (_) {} }, 700);
 
   } catch (_) {}
 }

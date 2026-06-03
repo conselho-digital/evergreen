@@ -39,6 +39,11 @@
         setMeta('meta[name="twitter:description"]', d.seo.description);
       }
 
+      if (d.antes_depois) {
+        if (d.antes_depois.title) setText('#antes-depois-title', d.antes_depois.title);
+        setHTML('#antes-depois-intro', d.antes_depois.intro);
+      }
+
       if (d.hero) {
         setText('.hero-tagline', d.hero.tagline);
         const vals = document.querySelectorAll('.hero-stat-value');
