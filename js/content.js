@@ -1,11 +1,16 @@
 /* ================================================================
-   EVERGREEN — Dynamic content loader from _data/
+   EVERGREEN — Dynamic content loader from content.json
    Falls back silently to static HTML values if fetch fails.
    ================================================================ */
 (async () => {
   const setText = (sel, val) => {
     if (!val) return;
     document.querySelectorAll(sel).forEach(el => { el.textContent = val; });
+  };
+  const setHTML = (sel, val) => {
+    if (!val) return;
+    const el = document.querySelector(sel);
+    if (el) el.innerHTML = val;
   };
   const setMeta = (sel, val) => {
     if (!val) return;
@@ -18,9 +23,9 @@
     });
   };
 
-  // ── SEO & Textos ───────────────────────────────────────────────
+  // ── Content JSON (CMS) ─────────────────────────────────────────
   try {
-    const res = await fetch('_data/site.json?v=' + Date.now());
+    const res = await fetch('content.json?v=' + Date.now());
     if (res.ok) {
       const d = await res.json();
 
@@ -32,10 +37,6 @@
         setMeta('meta[property="og:description"]',  d.seo.description);
         setMeta('meta[name="twitter:title"]',       d.seo.title);
         setMeta('meta[name="twitter:description"]', d.seo.description);
-        if (d.seo.og_image) {
-          setMeta('meta[property="og:image"]',  d.seo.og_image);
-          setMeta('meta[name="twitter:image"]', d.seo.og_image);
-        }
       }
 
       if (d.hero) {
@@ -58,14 +59,37 @@
       }
 
       if (d.contact) {
-        setText('[data-phone]', d.contact.phone_display);
-        setText('[data-hours]', d.contact.hours_weekday);
-        if (d.contact.whatsapp_number) {
-          const wa = 'https://wa.me/' + d.contact.whatsapp_number;
-          document.querySelectorAll('a[href*="wa.me/"]').forEach(el => { el.href = wa; });
+        const container = document.getElementById('contact-cards');
+        if (container && Array.isArray(d.contact.cards)) {
+          renderContactCards(container, d.contact.cards);
+        }
+
+        setHTML('#wa-panel-label', d.contact.wa_panel_label);
+        setHTML('#wa-panel-sub',   d.contact.wa_panel_sub);
+
+        const waCard = (d.contact.cards || []).find(c => c.type === 'whatsapp');
+        if (waCard?.link) {
+          const waHref = 'https://wa.me/' + waCard.link;
+          document.querySelectorAll('a[href*="wa.me/"]').forEach(a => { a.href = waHref; });
+          const dispEl = document.getElementById('footer-whatsapp-display');
+          if (dispEl) dispEl.textContent = waCard.display || waCard.link;
+          const fwLink = document.getElementById('footer-whatsapp');
+          if (fwLink) fwLink.href = waHref;
         }
       }
 
+      if (d.footer) {
+        setText('#footer-location', d.footer.location);
+        setText('#footer-hours',    d.footer.hours);
+      }
+    }
+  } catch (_) {}
+
+  // ── Analytics (read from _data/site.json) ─────────────────────
+  try {
+    const res = await fetch('_data/site.json?v=' + Date.now());
+    if (res.ok) {
+      const d = await res.json();
       if (d.analytics?.ga4_id) {
         const id = d.analytics.ga4_id.trim();
         if (id.startsWith('G-')) {
@@ -81,12 +105,11 @@
     }
   } catch (_) {}
 
-  // ── Fotos do Site ──────────────────────────────────────────────
+  // ── Photos ─────────────────────────────────────────────────────
   try {
     const res = await fetch('_data/photos.json?v=' + Date.now());
     if (res.ok) {
       const p = await res.json();
-
       if (p.identity) {
         setImg('logo', p.identity.logo);
         setImg('contact-mockup', p.identity.contact_mockup);
@@ -95,23 +118,19 @@
           if (bg) bg.style.backgroundImage = `url('${p.identity.hero_bg}')`;
         }
       }
-
       ['ba1', 'ba2', 'ba3'].forEach(k => {
         if (!p[k]) return;
         setImg(`${k}-before`, p[k].before);
         setImg(`${k}-after`,  p[k].after);
       });
-
       if (p.portfolio) {
         ['taludes', 'industrial', 'urbanas', 'erosao'].forEach(k => {
           setImg(`portfolio-${k}`, p.portfolio[k]);
         });
       }
-
       if (p.process) {
         [1, 2, 3, 4].forEach(n => setImg(`process-${n}`, p.process[`step${n}`]));
       }
-
       if (p.insumos) {
         ['fertilizantes', 'sementes', 'mulches', 'fixadores', 'fibra'].forEach(k => {
           setImg(`insumo-${k}`, p.insumos[k]);
@@ -120,13 +139,12 @@
     }
   } catch (_) {}
 
-  // ── Álbum — Galeria de Fotos ───────────────────────────────────
+  // ── Gallery ────────────────────────────────────────────────────
   try {
     const res = await fetch('gallery.json?v=' + Date.now());
     if (res.ok) {
       const g = await res.json();
       const pinMap = { antes: 'pin-yellow', aplicacao: 'pin-blue', resultado: 'pin-green' };
-
       Object.entries(pinMap).forEach(([key, pin]) => {
         const col = document.querySelector(`[data-gallery-phase="${key}"]`);
         if (!col || !Array.isArray(g[key])) return;
@@ -150,8 +168,63 @@
           col.append(item);
         });
       });
-
       window.observeAnimTargets?.();
     }
   } catch (_) {}
 })();
+
+function renderContactCards(container, cards) {
+  const icons = {
+    whatsapp: '<i class="fab fa-whatsapp"></i>',
+    phone:    '<i class="fas fa-phone"></i>',
+    telegram: '<i class="fab fa-telegram-plane"></i>',
+    email:    '<i class="fas fa-envelope"></i>',
+    area:     '<i class="fas fa-map-marker-alt"></i>',
+    hours:    '<i class="fas fa-clock"></i>',
+    other:    '<i class="fas fa-info-circle"></i>'
+  };
+  const titles = {
+    whatsapp: 'WhatsApp',
+    phone:    'Telefone',
+    telegram: 'Telegram',
+    email:    'E-mail',
+    area:     'Área de Atendimento',
+    hours:    'Horário',
+    other:    'Contato'
+  };
+
+  container.innerHTML = cards.map(card => {
+    const icon  = icons[card.type] || icons.other;
+    const title = titles[card.type] || titles.other;
+    let content = '';
+
+    switch (card.type) {
+      case 'whatsapp':
+        content = card.link
+          ? `<a href="https://wa.me/${card.link}" target="_blank" rel="noopener">${card.display || card.link}</a>`
+          : (card.display || '');
+        break;
+      case 'telegram':
+        content = card.link
+          ? `<a href="https://t.me/${card.link}" target="_blank" rel="noopener">${card.display || card.link}</a>`
+          : (card.display || '');
+        break;
+      case 'email':
+        content = card.link
+          ? `<a href="mailto:${card.link}">${card.display || card.link}</a>`
+          : (card.display || '');
+        break;
+      case 'hours':
+        content = card.text || '';
+        if (card.note) content += `<br><small style="opacity:.7">${card.note}</small>`;
+        break;
+      default:
+        content = card.display || card.text || '';
+    }
+
+    return `<div class="contact-item visible">
+      <div class="contact-icon-wrap">${icon}</div>
+      <div><h3>${title}</h3><p>${content}</p></div>
+    </div>`;
+  }).join('');
+}

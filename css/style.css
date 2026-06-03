@@ -954,6 +954,23 @@ body {
 .footer-links a:hover { color: var(--gold-light); }
 .footer-credits { font-size: .74rem; color: var(--parch-dark); line-height: 1.8; text-align: right; text-shadow: 1px 1px 2px rgba(0,0,0,.5); }
 .footer-credits a { color: var(--green-hi); text-decoration: none; }
+.footer-info-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 32px; flex-wrap: wrap;
+  padding-bottom: 24px; margin-bottom: 20px;
+  border-bottom: 1px solid rgba(139,94,42,.3);
+}
+.footer-info-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .85rem; color: var(--parch-mid);
+  text-decoration: none;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.5);
+  transition: color .2s;
+}
+a.footer-info-item:hover { color: var(--gold-light); }
+.footer-info-item i { color: var(--gold-mid); font-size: .95rem; }
+.wa-panel-label { margin-bottom: 14px; font-size: .85rem; color: var(--leather-mid); }
+.wa-panel-label p, #wa-panel-sub p { margin: 0; }
 
 /* ================================================================
    SWIPER CUSTOM

@@ -467,7 +467,7 @@
   </section>
 
   <!-- ========== CTA ========== -->
-  <section class="cta-section">
+  <section class="cta-section" id="cta-section">
     <div class="cta-inner">
       <p class="cta-question">Quer esse resultado na sua obra?</p>
       <h2 class="cta-headline">Faça um orçamento já</h2>
@@ -715,34 +715,34 @@
           <div class="notepad-margin-line"></div>
           <div class="notepad-content">
 
-            <div class="contact-info">
+            <div class="contact-info" id="contact-cards">
               <div class="contact-item">
                 <div class="contact-icon-wrap">
                   <i class="fab fa-whatsapp"></i>
                 </div>
                 <div>
                   <h3>WhatsApp</h3>
-                  <p data-phone>+55 19 98945-5715</p>
+                  <p><a href="https://wa.me/5519989455715">(19) 98945-5715</a></p>
                 </div>
               </div>
-
               <div class="contact-item">
                 <div class="contact-icon-wrap">
                   <i class="fas fa-clock"></i>
                 </div>
                 <div>
-                  <h3>Horário Comercial</h3>
-                  <p data-hours>Seg–Sex: 8h às 18h</p>
+                  <h3>Horário</h3>
+                  <p>Seg–Sex: 8h às 18h</p>
                 </div>
               </div>
             </div>
 
             <div class="contact-cta">
-              <a href="https://wa.me/5519989455715" class="btn-whatsapp" target="_blank" rel="noopener">
+              <div id="wa-panel-label" class="wa-panel-label"><p>Fale com nossa equipe agora mesmo</p></div>
+              <a href="https://wa.me/5519989455715" id="contact-wa-link" class="btn-whatsapp" target="_blank" rel="noopener">
                 <i class="fab fa-whatsapp"></i>
                 Falar no WhatsApp
               </a>
-              <p class="cta-note">Resposta em até duas horas em horário comercial</p>
+              <div id="wa-panel-sub" class="cta-note"><p>Resposta em até duas horas em horário comercial</p></div>
             </div>
 
           </div>
@@ -752,8 +752,22 @@
   </section>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="footer">
+  <footer class="footer" id="site-footer">
     <div class="footer-plank">
+      <div class="footer-info-row">
+        <a id="footer-whatsapp" class="footer-info-item" href="https://wa.me/5519989455715" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i>
+          <span id="footer-whatsapp-display">(19) 98945-5715</span>
+        </a>
+        <div class="footer-info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span id="footer-location">Campinas – SP</span>
+        </div>
+        <div class="footer-info-item">
+          <i class="fas fa-clock"></i>
+          <span id="footer-hours">Seg–Sáb: 08h–18h</span>
+        </div>
+      </div>
       <div class="footer-inner">
         <div class="footer-brand">
           <img src="img/logo.png" alt="Evergreen" class="footer-logo-img" data-photo="logo">
