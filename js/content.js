@@ -65,6 +65,17 @@
         });
       }
 
+      if (d.insumos) {
+        const INSUMO_KEYS = ['fertilizantes', 'sementes', 'mulches', 'fixadores', 'fibra'];
+        INSUMO_KEYS.forEach(k => {
+          const item = d.insumos[k];
+          if (!item) return;
+          setImg(`insumo-${k}`, item.src);
+          document.querySelectorAll(`[data-insumo="${k}"] h3`).forEach(el => { if (item.title) el.textContent = item.title; });
+          document.querySelectorAll(`[data-insumo="${k}"] p`).forEach(el => { if (item.text)  el.textContent = item.text;  });
+        });
+      }
+
       if (d.cta) {
         setText('.cta-question', d.cta.question);
         setText('.cta-headline', d.cta.headline);
@@ -137,11 +148,6 @@
       }
       if (p.process) {
         [1, 2, 3, 4].forEach(n => setImg(`process-${n}`, p.process[`step${n}`]));
-      }
-      if (p.insumos) {
-        ['fertilizantes', 'sementes', 'mulches', 'fixadores', 'fibra'].forEach(k => {
-          setImg(`insumo-${k}`, p.insumos[k]);
-        });
       }
     }
   } catch (_) {}

@@ -438,6 +438,20 @@
       transition: background .15s; white-space: nowrap;
     }
     .ba-change-btn:hover { background: rgba(245,196,0,.22); }
+
+    /* ── INSUMOS EDITOR ────────────────────────────────────────── */
+    .insumo-editor { padding: 4px 0 14px; }
+    .insumo-editor + .insumo-editor { border-top: 1px solid var(--border); padding-top: 14px; }
+    .insumo-key-label {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: .5px; margin-bottom: 9px;
+    }
+    .insumo-editor-grid {
+      display: grid; grid-template-columns: 100px 1fr; gap: 10px; align-items: start;
+    }
+    .insumo-thumb-col { display: flex; flex-direction: column; gap: 4px; }
+    .insumo-fields-col { display: flex; flex-direction: column; gap: 7px; }
+    .insumo-fields-col textarea.field-input { min-height: 58px; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -679,6 +693,17 @@
             </div>
           </div>
 
+          <!-- INSUMOS -->
+          <div class="accordion-item" data-section="parceiros">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span class="tab-icon">🌱</span>
+              <span class="accordion-title">Nossos Insumos</span>
+              <span class="accordion-arrow">▼</span>
+            </div>
+            <div class="accordion-body" id="insumos-accordion-body">
+            </div>
+          </div>
+
           <!-- CONTATO -->
           <div class="accordion-item" data-section="contato">
             <div class="accordion-header" onclick="toggleAccordion(this)">
@@ -782,6 +807,42 @@ let quillWaSub   = null;
 let quillBAIntro = null;
 
 /* ================================================================
+   INSUMOS CONFIG
+   ================================================================ */
+const INSUMO_KEYS = [
+  { k: 'fertilizantes', label: 'Corretivo de Solo' },
+  { k: 'sementes',      label: 'Sementes'          },
+  { k: 'mulches',       label: 'Mulch de Fibra'    },
+  { k: 'fixadores',     label: 'Fixador'           },
+  { k: 'fibra',         label: 'Adubo Orgânico'    },
+];
+
+function buildInsumoAccordion() {
+  const body = document.getElementById('insumos-accordion-body');
+  if (!body) return;
+  body.innerHTML = INSUMO_KEYS.map(({ k, label }) => `
+    <div class="insumo-editor">
+      <div class="insumo-key-label">${label}</div>
+      <div class="insumo-editor-grid">
+        <div class="insumo-thumb-col">
+          <div class="ba-thumb-wrap" onclick="openLightbox(resolveImgSrc(document.getElementById('insumo-${k}-src').value))">
+            <img id="insumo-${k}-thumb" class="ba-thumb" src="" alt="${label}">
+          </div>
+          <div class="ba-photo-actions">
+            <a id="insumo-${k}-link" class="ba-photo-link" href="#" target="_blank" rel="noopener">🔗 Ver</a>
+            <button class="ba-change-btn" onclick="changePhotoUrl('insumo-${k}')">Trocar</button>
+          </div>
+          <input id="insumo-${k}-src" type="text" class="field-input" style="font-size:10px;margin-top:2px" placeholder="img/..." oninput="updatePhotoThumb('insumo-${k}')">
+        </div>
+        <div class="insumo-fields-col">
+          <input id="insumo-${k}-title" type="text" class="field-input" placeholder="Título">
+          <textarea id="insumo-${k}-text" class="field-input" placeholder="Descrição…"></textarea>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ================================================================
    CARD TYPES
    ================================================================ */
 const CARD_TYPES = [
@@ -798,6 +859,8 @@ const CARD_TYPES = [
    INIT
    ================================================================ */
 (function init() {
+  buildInsumoAccordion();
+
   // Quill editors
   quillBAIntro = new Quill('#quill-ba-intro', {
     theme: 'snow',
@@ -940,6 +1003,15 @@ function populateForm(d) {
   sv('cta-question', d.cta?.question || '');
   sv('cta-headline', d.cta?.headline || '');
 
+  const insumos = d.insumos || {};
+  INSUMO_KEYS.forEach(({ k }) => {
+    const item = insumos[k] || {};
+    sv(`insumo-${k}-src`,   item.src   || '');
+    sv(`insumo-${k}-title`, item.title || '');
+    sv(`insumo-${k}-text`,  item.text  || '');
+    updatePhotoThumb(`insumo-${k}`);
+  });
+
   renderCardsEditor(d.contact?.cards || []);
   if (quillWaLabel) quillWaLabel.root.innerHTML = d.contact?.wa_panel_label || '';
   if (quillWaSub)   quillWaSub.root.innerHTML   = d.contact?.wa_panel_sub   || '';
@@ -971,6 +1043,11 @@ function collectFormValues() {
       }))
     },
     cta: { question: gv('cta-question'), headline: gv('cta-headline') },
+    insumos: Object.fromEntries(INSUMO_KEYS.map(({ k }) => [k, {
+      src:   gv(`insumo-${k}-src`),
+      title: gv(`insumo-${k}-title`),
+      text:  gv(`insumo-${k}-text`)
+    }])),
     contact: {
       cards:         getCardsFromForm(),
       wa_panel_label: quillWaLabel ? quillWaLabel.root.innerHTML : '',
@@ -1166,6 +1243,17 @@ function syncPreview() {
         const n = i + 1;
         if (p.before_src) doc.querySelectorAll(`[data-photo="ba${n}-before"]`).forEach(img => { img.src = p.before_src; });
         if (p.after_src)  doc.querySelectorAll(`[data-photo="ba${n}-after"]`).forEach(img  => { img.src = p.after_src;  });
+      });
+    }
+
+    // Insumos
+    if (d.insumos) {
+      INSUMO_KEYS.forEach(({ k }) => {
+        const item = d.insumos[k];
+        if (!item) return;
+        if (item.src) doc.querySelectorAll(`[data-photo="insumo-${k}"]`).forEach(img => { img.src = item.src; });
+        doc.querySelectorAll(`[data-insumo="${k}"] h3`).forEach(el => { if (item.title) el.textContent = item.title; });
+        doc.querySelectorAll(`[data-insumo="${k}"] p`).forEach(el  => { if (item.text)  el.textContent = item.text;  });
       });
     }
 

@@ -34,6 +34,13 @@
     "wa_panel_label": "<p>Fale com nossa equipe agora mesmo</p>",
     "wa_panel_sub": "<p>Resposta em até duas horas em horário comercial</p>"
   },
+  "insumos": {
+    "fertilizantes": { "src": "img/fertilizantes.png",    "title": "Corretivo de Solo", "text": "Solotrat equilibra o pH e condiciona o solo para a germinação rápida e uniforme" },
+    "sementes":      { "src": "img/sementes.png",         "title": "Sementes",          "text": "Variedades certificadas de grama líquida para cada tipo de solo e bioma" },
+    "mulches":       { "src": "img/mulches.png",          "title": "Mulch de Fibra",    "text": "Fibra de madeira + adubo orgânico que retém umidade e protege a biomembrana" },
+    "fixadores":     { "src": "img/fixadores.png",        "title": "Fixador",           "text": "Liga os componentes ao solo com resistência ao escoamento por chuvas e ventos" },
+    "fibra":         { "src": "img/fibra-de-madeira.png", "title": "Adubo Orgânico",    "text": "Nutrição natural de liberação lenta que sustenta o crescimento por semanas" }
+  },
   "footer": {
     "location": "Campinas – SP",
     "hours": "Seg–Sáb: 08h–18h"
