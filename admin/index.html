@@ -412,10 +412,8 @@
       font-size: 10px; font-weight: 700; color: var(--text-dim);
       text-transform: uppercase; letter-spacing: .7px;
     }
-    .ba-thumb-wrap {
-      border-radius: 5px; overflow: hidden; background: var(--bg-light);
-      aspect-ratio: 4/3; cursor: pointer; position: relative;
-    }
+    .ba-thumb-wrap { border-radius: 5px; overflow: hidden; background: var(--bg-light);
+      aspect-ratio: 4/3; cursor: pointer; position: relative; }
     .ba-thumb-wrap::after {
       content: '🔍'; position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
@@ -424,6 +422,22 @@
     }
     .ba-thumb-wrap:hover::after { opacity: 1; }
     .ba-thumb { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ba-photo-actions {
+      display: flex; align-items: center; gap: 6px; margin: 4px 0 2px;
+    }
+    .ba-photo-link {
+      flex: 1; font-size: 10px; color: var(--accent); text-decoration: none;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      opacity: .6; transition: opacity .15s;
+    }
+    .ba-photo-link:hover { opacity: 1; text-decoration: underline; }
+    .ba-change-btn {
+      padding: 3px 8px; font-size: 10px; font-weight: 700; flex-shrink: 0;
+      background: rgba(245,196,0,.1); border: 1px solid rgba(245,196,0,.25);
+      border-radius: 4px; color: var(--accent); cursor: pointer;
+      transition: background .15s; white-space: nowrap;
+    }
+    .ba-change-btn:hover { background: rgba(245,196,0,.22); }
   </style>
 </head>
 <body>
@@ -573,12 +587,20 @@
                   <div class="ba-thumb-wrap" onclick="openLightbox(resolveImgSrc(document.getElementById('ba1-before-src').value))">
                     <img id="ba1-before-thumb" class="ba-thumb" src="" alt="Antes 1">
                   </div>
+                  <div class="ba-photo-actions">
+                    <a id="ba1-before-link" class="ba-photo-link" href="#" target="_blank" rel="noopener">🔗 Ver foto</a>
+                    <button class="ba-change-btn" onclick="changePhotoUrl('ba1-before')">Trocar</button>
+                  </div>
                   <input id="ba1-before-src" type="text" class="field-input" style="font-size:11px" placeholder="img/before-hydroseed.webp" oninput="updatePhotoThumb('ba1-before')">
                 </div>
                 <div class="ba-photo-field">
                   <div class="ba-photo-label">Depois</div>
                   <div class="ba-thumb-wrap" onclick="openLightbox(resolveImgSrc(document.getElementById('ba1-after-src').value))">
                     <img id="ba1-after-thumb" class="ba-thumb" src="" alt="Depois 1">
+                  </div>
+                  <div class="ba-photo-actions">
+                    <a id="ba1-after-link" class="ba-photo-link" href="#" target="_blank" rel="noopener">🔗 Ver foto</a>
+                    <button class="ba-change-btn" onclick="changePhotoUrl('ba1-after')">Trocar</button>
                   </div>
                   <input id="ba1-after-src" type="text" class="field-input" style="font-size:11px" placeholder="img/after-hydroseed.webp" oninput="updatePhotoThumb('ba1-after')">
                 </div>
@@ -591,12 +613,20 @@
                   <div class="ba-thumb-wrap" onclick="openLightbox(resolveImgSrc(document.getElementById('ba2-before-src').value))">
                     <img id="ba2-before-thumb" class="ba-thumb" src="" alt="Antes 2">
                   </div>
+                  <div class="ba-photo-actions">
+                    <a id="ba2-before-link" class="ba-photo-link" href="#" target="_blank" rel="noopener">🔗 Ver foto</a>
+                    <button class="ba-change-btn" onclick="changePhotoUrl('ba2-before')">Trocar</button>
+                  </div>
                   <input id="ba2-before-src" type="text" class="field-input" style="font-size:11px" placeholder="img/before-hydroseed-2.webp" oninput="updatePhotoThumb('ba2-before')">
                 </div>
                 <div class="ba-photo-field">
                   <div class="ba-photo-label">Depois</div>
                   <div class="ba-thumb-wrap" onclick="openLightbox(resolveImgSrc(document.getElementById('ba2-after-src').value))">
                     <img id="ba2-after-thumb" class="ba-thumb" src="" alt="Depois 2">
+                  </div>
+                  <div class="ba-photo-actions">
+                    <a id="ba2-after-link" class="ba-photo-link" href="#" target="_blank" rel="noopener">🔗 Ver foto</a>
+                    <button class="ba-change-btn" onclick="changePhotoUrl('ba2-after')">Trocar</button>
                   </div>
                   <input id="ba2-after-src" type="text" class="field-input" style="font-size:11px" placeholder="img/after-hydroseed-2.webp" oninput="updatePhotoThumb('ba2-after')">
                 </div>
@@ -609,12 +639,20 @@
                   <div class="ba-thumb-wrap" onclick="openLightbox(resolveImgSrc(document.getElementById('ba3-before-src').value))">
                     <img id="ba3-before-thumb" class="ba-thumb" src="" alt="Antes 3">
                   </div>
+                  <div class="ba-photo-actions">
+                    <a id="ba3-before-link" class="ba-photo-link" href="#" target="_blank" rel="noopener">🔗 Ver foto</a>
+                    <button class="ba-change-btn" onclick="changePhotoUrl('ba3-before')">Trocar</button>
+                  </div>
                   <input id="ba3-before-src" type="text" class="field-input" style="font-size:11px" placeholder="img/before-hydroseed-3.webp" oninput="updatePhotoThumb('ba3-before')">
                 </div>
                 <div class="ba-photo-field">
                   <div class="ba-photo-label">Depois</div>
                   <div class="ba-thumb-wrap" onclick="openLightbox(resolveImgSrc(document.getElementById('ba3-after-src').value))">
                     <img id="ba3-after-thumb" class="ba-thumb" src="" alt="Depois 3">
+                  </div>
+                  <div class="ba-photo-actions">
+                    <a id="ba3-after-link" class="ba-photo-link" href="#" target="_blank" rel="noopener">🔗 Ver foto</a>
+                    <button class="ba-change-btn" onclick="changePhotoUrl('ba3-after')">Trocar</button>
                   </div>
                   <input id="ba3-after-src" type="text" class="field-input" style="font-size:11px" placeholder="img/after-hydroseed-3.webp" oninput="updatePhotoThumb('ba3-after')">
                 </div>
@@ -1372,7 +1410,19 @@ function resolveImgSrc(src) {
 function updatePhotoThumb(key) {
   const input = document.getElementById(key + '-src');
   const thumb = document.getElementById(key + '-thumb');
-  if (input && thumb) thumb.src = resolveImgSrc(input.value.trim());
+  const link  = document.getElementById(key + '-link');
+  const src   = input ? resolveImgSrc(input.value.trim()) : '';
+  if (thumb) thumb.src = src;
+  if (link) { link.href = src || '#'; link.style.opacity = src ? '' : '.25'; }
+}
+
+function changePhotoUrl(key) {
+  const input = document.getElementById(key + '-src');
+  if (!input) return;
+  input.value = '';
+  updatePhotoThumb(key);
+  input.focus();
+  scheduleSyncPreview();
 }
 
 /* ================================================================
