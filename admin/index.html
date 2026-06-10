@@ -170,7 +170,9 @@
       background: var(--bg-dark); border-right: 1px solid var(--border);
       overflow-y: auto;
       scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+      transition: width .2s;
     }
+    #editor-panel.full-width { width: 100%; }
     .tab-content { display: none; padding: 22px 18px; }
     .tab-content.active { display: block; }
 
@@ -1409,8 +1411,9 @@ const CARD_TYPES = [
   // Restore CF Worker URL from localStorage
   sv('cf-worker-url', localStorage.getItem(CF_WORKER_KEY) || '');
 
-  // Dashboard is the default tab — hide preview, init dashboard
+  // Dashboard is the default tab — hide preview, expand editor
   document.getElementById('preview-panel').classList.add('hidden');
+  document.getElementById('editor-panel').classList.add('full-width');
   initDashboard();
 
   // Restore session
@@ -1707,9 +1710,11 @@ function switchTab(name) {
     t.classList.toggle('active', t.id === 'tab-' + name)
   );
   const pp = document.getElementById('preview-panel');
+  const ep = document.getElementById('editor-panel');
   if (pp) {
-    if (PREVIEW_TABS.has(name)) pp.classList.remove('hidden');
-    else pp.classList.add('hidden');
+    const showPreview = PREVIEW_TABS.has(name);
+    pp.classList.toggle('hidden', !showPreview);
+    if (ep) ep.classList.toggle('full-width', !showPreview);
   }
   if (name === 'rodape')    scrollPreviewToSection('site-footer');
   if (name === 'dashboard') initDashboard();
