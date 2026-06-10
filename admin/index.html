@@ -2383,31 +2383,34 @@ async function fetchCfAnalytics(days) {
 function renderDashboard(json, days) {
   document.getElementById('dash-empty').style.display = 'none';
 
-  let daily = [], totalReqs = 0, totalBytes = 0, totalThreats = 0, uniqueVisitors = 0;
+  let daily = [], totalReqs = 0, totalPageViews = 0, totalThreats = 0, uniqueVisitors = 0;
   try {
     const zones  = json?.data?.viewer?.zones || [];
     const zone   = zones[0] || {};
-    const groups = (zone.httpRequests1dGroups || []).slice().sort((a, b) =>
+    // Worker returns "current" (aliased from httpRequests1dGroups)
+    const groups = (zone.current || zone.httpRequests1dGroups || []).slice().sort((a, b) =>
       a.dimensions.date.localeCompare(b.dimensions.date)
     );
     daily          = groups.map(g => ({
-      date:     g.dimensions.date,
-      requests: g.sum?.requests || 0,
-      bytes:    g.sum?.bytes    || 0,
-      threats:  g.sum?.threats  || 0,
-      uniques:  g.uniq?.uniques || 0,
+      date:      g.dimensions.date,
+      requests:  g.sum?.requests  || 0,
+      pageViews: g.sum?.pageViews || g.sum?.bytes || 0,
+      uniques:   g.uniq?.uniques  || 0,
     }));
-    totalReqs      = daily.reduce((s, g) => s + g.requests, 0);
-    totalBytes     = daily.reduce((s, g) => s + g.bytes,    0);
-    totalThreats   = daily.reduce((s, g) => s + g.threats,  0);
-    uniqueVisitors = daily.reduce((s, g) => s + g.uniques,  0);
+    totalReqs      = daily.reduce((s, g) => s + g.requests,  0);
+    totalPageViews = daily.reduce((s, g) => s + g.pageViews, 0);
+    uniqueVisitors = daily.reduce((s, g) => s + g.uniques,   0);
+
+    // Compare with previous period if available
+    const prev = zone.prev?.[0];
+    if (prev) totalThreats = prev.sum?.requests || 0; // used as prev-period reference
   } catch (_) {}
 
   document.getElementById('dash-kpi-grid').innerHTML = [
-    { label: 'Requisições',        value: fmt(totalReqs),       sub: 'últimos ' + days + ' dias' },
-    { label: 'Visitantes Únicos',  value: fmt(uniqueVisitors),  sub: 'últimos ' + days + ' dias' },
-    { label: 'Dados Trafegados',   value: fmtBytes(totalBytes), sub: 'últimos ' + days + ' dias' },
-    { label: 'Ameaças Bloqueadas', value: fmt(totalThreats),    sub: 'últimos ' + days + ' dias' },
+    { label: 'Requisições',       value: fmt(totalReqs),      sub: 'últimos ' + days + ' dias' },
+    { label: 'Visitantes Únicos', value: fmt(uniqueVisitors), sub: 'últimos ' + days + ' dias' },
+    { label: 'Page Views',        value: fmt(totalPageViews), sub: 'últimos ' + days + ' dias' },
+    { label: 'Período Anterior',  value: fmt(totalThreats),   sub: 'requisições' },
   ].map(({ label, value, sub }) =>
     `<div class="dash-kpi-card">
       <div class="dash-kpi-label">${label}</div>
@@ -2419,10 +2422,15 @@ function renderDashboard(json, days) {
   renderChart(daily);
 
   const events = json?.events || {};
+  const timeVal = events.time_avg != null
+    ? (events.time_avg + 's')
+    : fmt(events.time || 0);
+  const timeLabel = events.time_avg != null ? 'Tempo Médio na Página' : 'Eventos de Tempo';
+
   document.getElementById('dash-events-row').innerHTML = [
     { icon: '💬', value: fmt(events.wa    || 0), label: 'Cliques WhatsApp'  },
     { icon: '🖼',  value: fmt(events.photo || 0), label: 'Fotos Visualizadas' },
-    { icon: '⏱',  value: fmt(events.time  || 0), label: 'Eventos de Tempo'  },
+    { icon: '⏱',  value: timeVal,                label: timeLabel            },
   ].map(({ icon, value, label }) =>
     `<div class="dash-event-card">
       <div class="dash-event-icon">${icon}</div>
