@@ -592,6 +592,18 @@
       text-align: center; color: var(--text-dim); padding: 36px 20px;
       font-size: 13px; line-height: 1.6;
     }
+    .dash-setup {
+      text-align: center; padding: 40px 24px;
+    }
+    .dash-setup-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .dash-setup-sub   { font-size: 12px; color: var(--text-dim); margin-bottom: 20px; line-height: 1.6; }
+    .dash-setup .field-input { text-align: left; margin-bottom: 12px; }
+    .dash-connect-btn {
+      width: 100%; padding: 11px; background: var(--accent); border: none;
+      border-radius: 8px; color: #111; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: background .2s;
+    }
+    .dash-connect-btn:hover { background: var(--accent-dark); }
   </style>
 </head>
 <body>
@@ -643,14 +655,14 @@
       </div>
     </div>
 
+    <div class="nav-label">Analytics</div>
+    <button class="tab-btn active" data-tab="dashboard"><span class="tab-icon">📊</span> Cloudflare Metrics</button>
+    <button class="tab-btn" data-tab="integracoes"><span class="tab-icon">🔌</span> Integrações</button>
+
     <div class="nav-label">Editar</div>
-    <button class="tab-btn active" data-tab="seo"><span class="tab-icon">🔍</span> SEO</button>
+    <button class="tab-btn" data-tab="seo"><span class="tab-icon">🔍</span> SEO</button>
     <button class="tab-btn" data-tab="secoes"><span class="tab-icon">📝</span> Seções</button>
     <button class="tab-btn" data-tab="rodape"><span class="tab-icon">📋</span> Rodapé</button>
-
-    <div class="nav-label">Analytics</div>
-    <button class="tab-btn" data-tab="dashboard"><span class="tab-icon">📊</span> Dashboard</button>
-    <button class="tab-btn" data-tab="integracoes"><span class="tab-icon">🔌</span> Integrações</button>
 
     <div class="sidebar-spacer"></div>
 
@@ -668,7 +680,7 @@
     <div id="editor-panel">
 
       <!-- SEO TAB -->
-      <div id="tab-seo" class="tab-content active">
+      <div id="tab-seo" class="tab-content">
         <div class="sec-header">🔍 SEO &amp; Meta Tags</div>
 
         <div class="field-group">
@@ -1035,31 +1047,43 @@
       </div>
 
       <!-- DASHBOARD TAB -->
-      <div id="tab-dashboard" class="tab-content">
-        <div class="sec-header">📊 Dashboard Analytics</div>
+      <div id="tab-dashboard" class="tab-content active">
+        <div class="sec-header">📊 Cloudflare Metrics</div>
 
-        <div class="dash-period-bar">
-          <button type="button" class="dash-period-btn active" data-days="7" onclick="selectPeriod(7)">7 dias</button>
-          <button type="button" class="dash-period-btn" data-days="30" onclick="selectPeriod(30)">30 dias</button>
-          <button type="button" class="dash-period-btn" data-days="90" onclick="selectPeriod(90)">90 dias</button>
-          <button type="button" class="dash-refresh-btn" onclick="refreshDashboard()" title="Atualizar">↻</button>
+        <!-- Setup prompt — shown when no Worker URL is configured -->
+        <div id="dash-setup" class="dash-setup" style="display:none">
+          <div style="font-size:40px;margin-bottom:12px">🔗</div>
+          <div class="dash-setup-title">Conectar Cloudflare Analytics</div>
+          <div class="dash-setup-sub">Digite a URL do Worker para visualizar as métricas do site.</div>
+          <input id="dash-setup-url" type="url" class="field-input" placeholder="https://analytics.evergreenhidrossemeadura.com.br">
+          <button type="button" class="dash-connect-btn" onclick="connectWorkerUrl()">Conectar</button>
         </div>
 
-        <div id="dash-banner-updating" class="dash-banner dash-banner-yellow" style="display:none">⟳ Atualizando dados…</div>
-        <div id="dash-banner-error" class="dash-banner dash-banner-red" style="display:none"></div>
+        <!-- Dashboard content — shown after URL is configured -->
+        <div id="dash-main">
+          <div class="dash-period-bar">
+            <button type="button" class="dash-period-btn active" data-days="7" onclick="selectPeriod(7)">7 dias</button>
+            <button type="button" class="dash-period-btn" data-days="30" onclick="selectPeriod(30)">30 dias</button>
+            <button type="button" class="dash-period-btn" data-days="90" onclick="selectPeriod(90)">90 dias</button>
+            <button type="button" class="dash-refresh-btn" onclick="refreshDashboard()" title="Atualizar">↻</button>
+          </div>
 
-        <div class="dash-kpi-grid" id="dash-kpi-grid"></div>
+          <div id="dash-banner-updating" class="dash-banner dash-banner-yellow" style="display:none">⟳ Atualizando dados…</div>
+          <div id="dash-banner-error" class="dash-banner dash-banner-red" style="display:none"></div>
 
-        <div class="dash-chart-wrap">
-          <div class="dash-chart-title">Visitas por Dia</div>
-          <div id="dash-chart"></div>
-        </div>
+          <div class="dash-kpi-grid" id="dash-kpi-grid"></div>
 
-        <div class="dash-events-row" id="dash-events-row"></div>
+          <div class="dash-chart-wrap">
+            <div class="dash-chart-title">Visitas por Dia</div>
+            <div id="dash-chart"></div>
+          </div>
 
-        <div id="dash-empty" class="dash-empty" style="display:none">
-          <div style="font-size:36px;margin-bottom:8px">📊</div>
-          <div>Configure a URL do Worker em <b>Integrações</b> para ver os dados.</div>
+          <div class="dash-events-row" id="dash-events-row"></div>
+
+          <div id="dash-empty" class="dash-empty" style="display:none">
+            <div style="font-size:36px;margin-bottom:8px">📊</div>
+            <div>Nenhum dado disponível para o período selecionado.</div>
+          </div>
         </div>
       </div>
 
@@ -1307,6 +1331,10 @@ const CARD_TYPES = [
 
   // Restore CF Worker URL from localStorage
   sv('cf-worker-url', localStorage.getItem(CF_WORKER_KEY) || '');
+
+  // Dashboard is the default tab — hide preview, init dashboard
+  document.getElementById('preview-panel').classList.add('hidden');
+  initDashboard();
 
   // Restore session
   const saved = sessionStorage.getItem('cms_token');
@@ -2262,10 +2290,27 @@ let _dashInitialized = false;
 let _dashPeriod      = 7;
 
 function initDashboard() {
+  const workerUrl = (localStorage.getItem(CF_WORKER_KEY) || '').trim();
+  if (!workerUrl) {
+    document.getElementById('dash-setup').style.display = '';
+    document.getElementById('dash-main').style.display  = 'none';
+    return;
+  }
+  document.getElementById('dash-setup').style.display = 'none';
+  document.getElementById('dash-main').style.display  = '';
   if (!_dashInitialized) {
     _dashInitialized = true;
     loadDashboardData(_dashPeriod);
   }
+}
+
+function connectWorkerUrl() {
+  const url = document.getElementById('dash-setup-url').value.trim();
+  if (!url) return;
+  localStorage.setItem(CF_WORKER_KEY, url);
+  sv('cf-worker-url', url);
+  _dashInitialized = false;
+  initDashboard();
 }
 
 function selectPeriod(days) {
@@ -2447,6 +2492,7 @@ function fmtBytes(b) {
 function saveCfWorkerUrl() {
   const url = document.getElementById('cf-worker-url').value.trim();
   localStorage.setItem(CF_WORKER_KEY, url);
+  sv('dash-setup-url', url);
   _dashInitialized = false;
   showNote('✓ URL do Worker salva.', 'success');
 }
