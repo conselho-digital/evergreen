@@ -187,25 +187,37 @@
     }
   } catch (_) {}
 
-  // ── Analytics (read from _data/site.json) ─────────────────────
-  try {
-    const res = await fetch('_data/site.json?v=' + Date.now());
-    if (res.ok) {
-      const d = await res.json();
-      if (d.analytics?.ga4_id) {
-        const id = d.analytics.ga4_id.trim();
-        if (id.startsWith('G-')) {
-          const s1 = document.createElement('script');
-          s1.async = true;
-          s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
-          document.head.appendChild(s1);
-          const s2 = document.createElement('script');
-          s2.textContent = 'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","' + id + '")';
-          document.head.appendChild(s2);
-        }
-      }
+  // ── Integrations (GA4, Meta Pixel — from content.json) ────────
+  if (d.integrations) {
+    // Google Analytics 4
+    const gaId = (d.integrations.google_analytics || '').trim();
+    if (gaId.startsWith('G-')) {
+      const s1 = document.createElement('script');
+      s1.async = true;
+      s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+      document.head.appendChild(s1);
+      const s2 = document.createElement('script');
+      s2.textContent = 'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","' + gaId + '")';
+      document.head.appendChild(s2);
     }
-  } catch (_) {}
+
+    // Meta Pixel
+    const pixelId = (d.integrations.meta_pixel || '').trim();
+    if (pixelId) {
+      const s = document.createElement('script');
+      s.textContent = `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixelId}');fbq('track','PageView');`;
+      document.head.appendChild(s);
+    }
+
+    // Meta domain verification
+    const metaVerify = (d.integrations.meta_verify || '').trim();
+    if (metaVerify) {
+      const m = document.createElement('meta');
+      m.name = 'facebook-domain-verification';
+      m.content = metaVerify;
+      document.head.appendChild(m);
+    }
+  }
 
   // ── Photos ─────────────────────────────────────────────────────
   try {

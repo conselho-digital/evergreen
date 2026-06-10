@@ -604,6 +604,34 @@
       cursor: pointer; transition: background .2s;
     }
     .dash-connect-btn:hover { background: var(--accent-dark); }
+
+    /* ── INTEGRAÇÕES CARDS ─────────────────────────────────────── */
+    .integ-card {
+      background: var(--bg-mid); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; margin-bottom: 14px;
+    }
+    .integ-card-hd {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .integ-icon {
+      width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .integ-icon.ga-icon   { background: rgba(255,167,38,.15); color: #FFA726; }
+    .integ-icon.meta-icon { background: rgba(66,133,244,.15);  color: #4285F4; font-size: 13px; font-weight: 800; }
+    .integ-icon.cf-icon   { background: rgba(245,196,0,.15);   color: var(--accent); }
+    .integ-card-title { font-size: 13px; font-weight: 700; color: var(--text); }
+    .integ-auto-note  { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+    .integ-save-badge {
+      font-size: 10px; font-weight: 600; color: var(--text-dim);
+      background: var(--bg-light); border: 1px solid var(--border);
+      border-radius: 4px; padding: 3px 8px; white-space: nowrap;
+    }
+    .integ-helper {
+      margin-top: 5px; font-size: 10.5px; color: var(--text-dim);
+      background: var(--bg-deep); border-radius: 4px; padding: 6px 9px;
+      border: 1px solid var(--border);
+    }
   </style>
 </head>
 <body>
@@ -657,12 +685,14 @@
 
     <div class="nav-label">Analytics</div>
     <button class="tab-btn active" data-tab="dashboard"><span class="tab-icon">📊</span> Cloudflare Metrics</button>
-    <button class="tab-btn" data-tab="integracoes"><span class="tab-icon">🔌</span> Integrações</button>
 
     <div class="nav-label">Editar</div>
     <button class="tab-btn" data-tab="seo"><span class="tab-icon">🔍</span> SEO</button>
     <button class="tab-btn" data-tab="secoes"><span class="tab-icon">📝</span> Seções</button>
     <button class="tab-btn" data-tab="rodape"><span class="tab-icon">📋</span> Rodapé</button>
+
+    <div class="nav-label">Configurações</div>
+    <button class="tab-btn" data-tab="integracoes"><span class="tab-icon">🔌</span> Integrações</button>
 
     <div class="sidebar-spacer"></div>
 
@@ -1089,13 +1119,60 @@
 
       <!-- INTEGRAÇÕES TAB -->
       <div id="tab-integracoes" class="tab-content">
-        <div class="sec-header">🔌 Integrações</div>
-        <div class="field-group">
-          <label class="field-label" for="cf-worker-url">URL do Worker Cloudflare Analytics</label>
-          <input id="cf-worker-url" type="url" class="field-input" placeholder="https://analytics.seusite.com.br/">
-          <div class="field-note">URL do Worker que consulta a Cloudflare. Salvo localmente no navegador — não é publicado no GitHub.</div>
+        <div class="sec-header" style="justify-content:space-between">
+          🔌 Anúncios &amp; Verificação
+          <span class="integ-save-badge">Salvo com Publicar</span>
         </div>
-        <button type="button" class="action-btn" style="background:var(--accent);color:#111;width:auto;padding:9px 18px;margin-top:4px" onclick="saveCfWorkerUrl()">Salvar URL</button>
+        <div class="field-note" style="margin-bottom:20px">Cole aqui os códigos fornecidos pelo Google e pela Meta para conectar o site às plataformas de anúncio.</div>
+
+        <!-- Google Analytics -->
+        <div class="integ-card">
+          <div class="integ-card-hd">
+            <div class="integ-icon ga-icon">📊</div>
+            <div class="integ-card-title">Google Analytics</div>
+          </div>
+          <div class="field-group" style="margin-bottom:0">
+            <label class="field-label">Google Analytics — ID de Medição</label>
+            <input id="integ-ga-id" type="text" class="field-input" placeholder="G-XXXXXXXXXX">
+            <div class="integ-helper">Google Analytics → Admin → Fluxos de dados → ID de medição</div>
+          </div>
+        </div>
+
+        <!-- Meta -->
+        <div class="integ-card">
+          <div class="integ-card-hd">
+            <div class="integ-icon meta-icon">f</div>
+            <div class="integ-card-title">Meta (Facebook)</div>
+          </div>
+          <div class="biz-grid">
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Meta Pixel — ID</label>
+              <input id="integ-meta-pixel" type="text" class="field-input" placeholder="000000000000000">
+              <div class="integ-helper">Meta Ads Manager → Fontes de Dados → Pixels → ID do Pixel</div>
+            </div>
+            <div class="field-group" style="margin-bottom:0">
+              <label class="field-label">Business Manager — Verificação de Domínio</label>
+              <input id="integ-meta-verify" type="text" class="field-input" placeholder="código de verificação">
+              <div class="integ-helper">Meta Business → Configurações → Segurança da Marca → Domínios</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloudflare -->
+        <div class="integ-card">
+          <div class="integ-card-hd">
+            <div class="integ-icon cf-icon">⚡</div>
+            <div>
+              <div class="integ-card-title">Cloudflare Analytics</div>
+              <div class="integ-auto-note">Preenchido automaticamente ao conectar o Dashboard</div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-bottom:8px">
+            <label class="field-label">Analytics URL <span style="font-weight:400;text-transform:none;letter-spacing:0">(usado pelo site para rastrear cliques)</span></label>
+            <input id="cf-worker-url" type="url" class="field-input" placeholder="https://analytics.evergreenhidrossemeadura.com.br/">
+          </div>
+          <button type="button" class="action-btn" style="background:rgba(245,196,0,.1);color:var(--accent);border:1px solid rgba(245,196,0,.25);width:auto;padding:8px 16px" onclick="saveCfWorkerUrl()">Salvar URL</button>
+        </div>
       </div>
 
     </div><!-- /editor-panel -->
@@ -1499,6 +1576,14 @@ function populateForm(d) {
   sv('footer-location', d.footer?.location || '');
   sv('footer-hours',    d.footer?.hours    || '');
   updateFooterWaAuto();
+
+  const integ = d.integrations || {};
+  sv('integ-ga-id',      integ.google_analytics || '');
+  sv('integ-meta-pixel', integ.meta_pixel       || '');
+  sv('integ-meta-verify',integ.meta_verify      || '');
+  const workerUrl = localStorage.getItem(CF_WORKER_KEY) || integ.worker_url || '';
+  sv('cf-worker-url', workerUrl);
+  if (workerUrl) localStorage.setItem(CF_WORKER_KEY, workerUrl);
 }
 
 function collectFormValues() {
@@ -1564,7 +1649,13 @@ function collectFormValues() {
       wa_panel_label: quillWaLabel ? quillWaLabel.root.innerHTML : '',
       wa_panel_sub:   quillWaSub   ? quillWaSub.root.innerHTML   : ''
     },
-    footer: { location: gv('footer-location'), hours: gv('footer-hours') }
+    footer: { location: gv('footer-location'), hours: gv('footer-hours') },
+    integrations: {
+      google_analytics: gv('integ-ga-id'),
+      meta_pixel:       gv('integ-meta-pixel'),
+      meta_verify:      gv('integ-meta-verify'),
+      worker_url:       gv('cf-worker-url')
+    }
   };
 }
 
