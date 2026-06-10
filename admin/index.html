@@ -522,6 +522,76 @@
     .insumo-thumb-col { display: flex; flex-direction: column; gap: 4px; }
     .insumo-fields-col { display: flex; flex-direction: column; gap: 7px; }
     .insumo-fields-col textarea.field-input { min-height: 58px; font-size: 12px; }
+
+    /* ── DASHBOARD ─────────────────────────────────────────────── */
+    .dash-period-bar {
+      display: flex; gap: 6px; margin-bottom: 14px; align-items: center;
+    }
+    .dash-period-btn {
+      padding: 6px 14px; border-radius: 6px;
+      background: var(--bg-mid); border: 1px solid var(--border);
+      color: var(--text-dim); font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+    }
+    .dash-period-btn.active {
+      background: rgba(245,196,0,.12); border-color: rgba(245,196,0,.4); color: var(--accent);
+    }
+    .dash-period-btn:hover:not(.active) { background: var(--bg-light); color: var(--text); }
+    .dash-refresh-btn {
+      margin-left: auto; padding: 6px 12px;
+      background: var(--bg-mid); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--text-dim); font-size: 14px;
+      cursor: pointer; transition: background .15s;
+    }
+    .dash-refresh-btn:hover { background: var(--bg-light); color: var(--text); }
+    .dash-banner {
+      padding: 9px 13px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .dash-banner-yellow { background: rgba(245,196,0,.14); border: 1px solid rgba(245,196,0,.3); color: #e0b000; }
+    .dash-banner-red    { background: rgba(244,67,54,.14);  border: 1px solid rgba(244,67,54,.3);  color: #ff7070; }
+    .dash-kpi-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;
+    }
+    .dash-kpi-card {
+      background: var(--bg-mid); border: 1px solid var(--border);
+      border-radius: 8px; padding: 13px 15px;
+    }
+    .dash-kpi-label {
+      font-size: 10px; font-weight: 700; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: .7px; margin-bottom: 5px;
+    }
+    .dash-kpi-value { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1.1; }
+    .dash-kpi-sub   { font-size: 10px; color: var(--text-dim); margin-top: 3px; }
+    .dash-chart-wrap {
+      background: var(--bg-mid); border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px; margin-bottom: 14px;
+    }
+    .dash-chart-title {
+      font-size: 11px; font-weight: 700; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: .7px; margin-bottom: 10px;
+    }
+    #dash-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; }
+    .dash-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
+    .dash-bar { width: 100%; background: rgba(245,196,0,.5); border-radius: 2px 2px 0 0; min-height: 2px; }
+    .dash-bar-lbl {
+      font-size: 8px; color: var(--text-dim); white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+    }
+    .dash-events-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px;
+    }
+    .dash-event-card {
+      background: var(--bg-mid); border: 1px solid var(--border);
+      border-radius: 8px; padding: 11px 13px; text-align: center;
+    }
+    .dash-event-icon  { font-size: 18px; margin-bottom: 4px; }
+    .dash-event-value { font-size: 18px; font-weight: 800; color: var(--text); }
+    .dash-event-label { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+    .dash-empty {
+      text-align: center; color: var(--text-dim); padding: 36px 20px;
+      font-size: 13px; line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -577,6 +647,10 @@
     <button class="tab-btn active" data-tab="seo"><span class="tab-icon">🔍</span> SEO</button>
     <button class="tab-btn" data-tab="secoes"><span class="tab-icon">📝</span> Seções</button>
     <button class="tab-btn" data-tab="rodape"><span class="tab-icon">📋</span> Rodapé</button>
+
+    <div class="nav-label">Analytics</div>
+    <button class="tab-btn" data-tab="dashboard"><span class="tab-icon">📊</span> Dashboard</button>
+    <button class="tab-btn" data-tab="integracoes"><span class="tab-icon">🔌</span> Integrações</button>
 
     <div class="sidebar-spacer"></div>
 
@@ -960,6 +1034,46 @@
         </div>
       </div>
 
+      <!-- DASHBOARD TAB -->
+      <div id="tab-dashboard" class="tab-content">
+        <div class="sec-header">📊 Dashboard Analytics</div>
+
+        <div class="dash-period-bar">
+          <button type="button" class="dash-period-btn active" data-days="7" onclick="selectPeriod(7)">7 dias</button>
+          <button type="button" class="dash-period-btn" data-days="30" onclick="selectPeriod(30)">30 dias</button>
+          <button type="button" class="dash-period-btn" data-days="90" onclick="selectPeriod(90)">90 dias</button>
+          <button type="button" class="dash-refresh-btn" onclick="refreshDashboard()" title="Atualizar">↻</button>
+        </div>
+
+        <div id="dash-banner-updating" class="dash-banner dash-banner-yellow" style="display:none">⟳ Atualizando dados…</div>
+        <div id="dash-banner-error" class="dash-banner dash-banner-red" style="display:none"></div>
+
+        <div class="dash-kpi-grid" id="dash-kpi-grid"></div>
+
+        <div class="dash-chart-wrap">
+          <div class="dash-chart-title">Visitas por Dia</div>
+          <div id="dash-chart"></div>
+        </div>
+
+        <div class="dash-events-row" id="dash-events-row"></div>
+
+        <div id="dash-empty" class="dash-empty" style="display:none">
+          <div style="font-size:36px;margin-bottom:8px">📊</div>
+          <div>Configure a URL do Worker em <b>Integrações</b> para ver os dados.</div>
+        </div>
+      </div>
+
+      <!-- INTEGRAÇÕES TAB -->
+      <div id="tab-integracoes" class="tab-content">
+        <div class="sec-header">🔌 Integrações</div>
+        <div class="field-group">
+          <label class="field-label" for="cf-worker-url">URL do Worker Cloudflare Analytics</label>
+          <input id="cf-worker-url" type="url" class="field-input" placeholder="https://analytics.seusite.com.br/">
+          <div class="field-note">URL do Worker que consulta a Cloudflare. Salvo localmente no navegador — não é publicado no GitHub.</div>
+        </div>
+        <button type="button" class="action-btn" style="background:var(--accent);color:#111;width:auto;padding:9px 18px;margin-top:4px" onclick="saveCfWorkerUrl()">Salvar URL</button>
+      </div>
+
     </div><!-- /editor-panel -->
 
     <!-- PREVIEW PANEL -->
@@ -1039,6 +1153,12 @@ const PORTFOLIO_KEYS = [
   { k: 'urbanas',    label: 'Revegetação de Zonas Urbanas'     },
   { k: 'erosao',     label: 'Controle de Erosão Rural'         },
 ];
+
+const CF_WORKER_KEY     = 'cf_worker_url';
+const CF_WORKER_DEFAULT = '';
+const CACHE_MAX_MS      = 2 * 60 * 60 * 1000;
+const CACHE_CHECK_MS    = 5 * 60 * 1000;
+const NO_PREVIEW_TABS   = new Set(['dashboard', 'integracoes']);
 
 function buildInsumoAccordion() {
   const body = document.getElementById('insumos-accordion-body');
@@ -1184,6 +1304,9 @@ const CARD_TYPES = [
       syncPreview();
     }, 700);
   });
+
+  // Restore CF Worker URL from localStorage
+  sv('cf-worker-url', localStorage.getItem(CF_WORKER_KEY) || '');
 
   // Restore session
   const saved = sessionStorage.getItem('cms_token');
@@ -1464,7 +1587,13 @@ function switchTab(name) {
   document.querySelectorAll('.tab-content').forEach(t =>
     t.classList.toggle('active', t.id === 'tab-' + name)
   );
-  if (name === 'rodape') scrollPreviewToSection('site-footer');
+  const pp = document.getElementById('preview-panel');
+  if (pp) {
+    if (NO_PREVIEW_TABS.has(name)) pp.classList.add('hidden');
+    else pp.classList.remove('hidden');
+  }
+  if (name === 'rodape')    scrollPreviewToSection('site-footer');
+  if (name === 'dashboard') initDashboard();
 }
 
 /* ================================================================
@@ -2124,6 +2253,202 @@ function fileToDataUrl(file) {
     r.onerror = reject;
     r.readAsDataURL(file);
   });
+}
+
+/* ================================================================
+   CLOUDFLARE ANALYTICS DASHBOARD
+   ================================================================ */
+let _dashInitialized = false;
+let _dashPeriod      = 7;
+
+function initDashboard() {
+  if (!_dashInitialized) {
+    _dashInitialized = true;
+    loadDashboardData(_dashPeriod);
+  }
+}
+
+function selectPeriod(days) {
+  _dashPeriod = days;
+  document.querySelectorAll('.dash-period-btn').forEach(b =>
+    b.classList.toggle('active', +b.dataset.days === days)
+  );
+  loadDashboardData(days);
+}
+
+function refreshDashboard() {
+  loadDashboardData(_dashPeriod, true);
+}
+
+async function loadDashboardData(days, forceRefresh) {
+  const cacheKey = 'cf_cache_' + days + 'd';
+  const raw      = localStorage.getItem(cacheKey);
+  let   parsed   = null;
+
+  if (raw) {
+    try { parsed = JSON.parse(raw); } catch (_) {}
+  }
+
+  if (parsed && (Date.now() - parsed._ts) < CACHE_MAX_MS) {
+    renderDashboard(parsed.data, days);
+    const stale = (Date.now() - parsed._ts) >= CACHE_CHECK_MS;
+    if (!forceRefresh && !stale) return;
+    showBanner('updating');
+    fetchCfAnalytics(days)
+      .then(fresh => {
+        hideBanner('updating');
+        if (fresh) {
+          renderDashboard(fresh, days);
+          localStorage.setItem(cacheKey, JSON.stringify({ data: fresh, _ts: Date.now() }));
+        }
+      })
+      .catch(() => {
+        hideBanner('updating');
+        showBanner('error', 'Falha ao atualizar. Exibindo dados em cache.');
+      });
+    return;
+  }
+
+  showBanner('updating');
+  try {
+    const fresh = await fetchCfAnalytics(days);
+    hideBanner('updating');
+    if (fresh) {
+      renderDashboard(fresh, days);
+      localStorage.setItem(cacheKey, JSON.stringify({ data: fresh, _ts: Date.now() }));
+    } else {
+      showDashEmpty();
+    }
+  } catch (ex) {
+    hideBanner('updating');
+    if (!parsed) showDashEmpty();
+    showBanner('error', 'Erro ao buscar dados: ' + ex.message);
+  }
+}
+
+async function fetchCfAnalytics(days) {
+  const workerUrl = (localStorage.getItem(CF_WORKER_KEY) || CF_WORKER_DEFAULT).trim();
+  if (!workerUrl) { showDashEmpty(); return null; }
+  const url = workerUrl.replace(/\/$/, '') + '?days=' + days;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Worker retornou ' + res.status);
+  return res.json();
+}
+
+function renderDashboard(json, days) {
+  document.getElementById('dash-empty').style.display = 'none';
+
+  let daily = [], totalReqs = 0, totalBytes = 0, totalThreats = 0, uniqueVisitors = 0;
+  try {
+    const zones  = json?.data?.viewer?.zones || [];
+    const zone   = zones[0] || {};
+    const groups = (zone.httpRequests1dGroups || []).slice().sort((a, b) =>
+      a.dimensions.date.localeCompare(b.dimensions.date)
+    );
+    daily          = groups.map(g => ({
+      date:     g.dimensions.date,
+      requests: g.sum?.requests || 0,
+      bytes:    g.sum?.bytes    || 0,
+      threats:  g.sum?.threats  || 0,
+      uniques:  g.uniq?.uniques || 0,
+    }));
+    totalReqs      = daily.reduce((s, g) => s + g.requests, 0);
+    totalBytes     = daily.reduce((s, g) => s + g.bytes,    0);
+    totalThreats   = daily.reduce((s, g) => s + g.threats,  0);
+    uniqueVisitors = daily.reduce((s, g) => s + g.uniques,  0);
+  } catch (_) {}
+
+  document.getElementById('dash-kpi-grid').innerHTML = [
+    { label: 'Requisições',        value: fmt(totalReqs),       sub: 'últimos ' + days + ' dias' },
+    { label: 'Visitantes Únicos',  value: fmt(uniqueVisitors),  sub: 'últimos ' + days + ' dias' },
+    { label: 'Dados Trafegados',   value: fmtBytes(totalBytes), sub: 'últimos ' + days + ' dias' },
+    { label: 'Ameaças Bloqueadas', value: fmt(totalThreats),    sub: 'últimos ' + days + ' dias' },
+  ].map(({ label, value, sub }) =>
+    `<div class="dash-kpi-card">
+      <div class="dash-kpi-label">${label}</div>
+      <div class="dash-kpi-value">${value}</div>
+      <div class="dash-kpi-sub">${sub}</div>
+    </div>`
+  ).join('');
+
+  renderChart(daily);
+
+  const events = json?.events || {};
+  document.getElementById('dash-events-row').innerHTML = [
+    { icon: '💬', value: fmt(events.wa    || 0), label: 'Cliques WhatsApp'  },
+    { icon: '🖼',  value: fmt(events.photo || 0), label: 'Fotos Visualizadas' },
+    { icon: '⏱',  value: fmt(events.time  || 0), label: 'Eventos de Tempo'  },
+  ].map(({ icon, value, label }) =>
+    `<div class="dash-event-card">
+      <div class="dash-event-icon">${icon}</div>
+      <div class="dash-event-value">${value}</div>
+      <div class="dash-event-label">${label}</div>
+    </div>`
+  ).join('');
+}
+
+function renderChart(daily) {
+  const chart = document.getElementById('dash-chart');
+  if (!chart) return;
+  if (!daily.length) {
+    chart.innerHTML = '<div style="color:var(--text-dim);font-size:12px;margin:auto">Sem dados</div>';
+    return;
+  }
+  const maxVal = Math.max(...daily.map(d => d.requests), 1);
+  chart.innerHTML = daily.map(d => {
+    const h = Math.max(Math.round((d.requests / maxVal) * 72), 2);
+    return `<div class="dash-bar-col">
+      <div class="dash-bar" style="height:${h}px" title="${d.date}: ${fmt(d.requests)} req"></div>
+      <div class="dash-bar-lbl">${d.date.slice(5)}</div>
+    </div>`;
+  }).join('');
+}
+
+function showBanner(type, msg) {
+  if (type === 'updating') {
+    const el = document.getElementById('dash-banner-updating');
+    if (el) el.style.display = '';
+  }
+  if (type === 'error') {
+    const el = document.getElementById('dash-banner-error');
+    if (el) { el.textContent = '⚠ ' + (msg || 'Erro'); el.style.display = ''; }
+  }
+}
+
+function hideBanner(type) {
+  const id = type === 'updating' ? 'dash-banner-updating' : 'dash-banner-error';
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'none';
+}
+
+function showDashEmpty() {
+  document.getElementById('dash-empty').style.display         = '';
+  document.getElementById('dash-kpi-grid').innerHTML          = '';
+  document.getElementById('dash-events-row').innerHTML        = '';
+  const chart = document.getElementById('dash-chart');
+  if (chart) chart.innerHTML = '';
+}
+
+function fmt(n) {
+  if (n === undefined || n === null) return '—';
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
+  return String(n);
+}
+
+function fmtBytes(b) {
+  if (!b) return '—';
+  if (b >= 1e9) return (b / 1e9).toFixed(1) + ' GB';
+  if (b >= 1e6) return (b / 1e6).toFixed(1) + ' MB';
+  if (b >= 1e3) return (b / 1e3).toFixed(1) + ' KB';
+  return b + ' B';
+}
+
+function saveCfWorkerUrl() {
+  const url = document.getElementById('cf-worker-url').value.trim();
+  localStorage.setItem(CF_WORKER_KEY, url);
+  _dashInitialized = false;
+  showNote('✓ URL do Worker salva.', 'success');
 }
 
 /* ================================================================
