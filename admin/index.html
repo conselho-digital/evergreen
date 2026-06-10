@@ -1259,7 +1259,7 @@ const CF_WORKER_KEY     = 'cf_worker_url';
 const CF_WORKER_DEFAULT = '';
 const CACHE_MAX_MS      = 2 * 60 * 60 * 1000;
 const CACHE_CHECK_MS    = 5 * 60 * 1000;
-const NO_PREVIEW_TABS   = new Set(['dashboard', 'integracoes']);
+const PREVIEW_TABS      = new Set(['secoes', 'rodape']);
 
 function buildInsumoAccordion() {
   const body = document.getElementById('insumos-accordion-body');
@@ -1708,8 +1708,8 @@ function switchTab(name) {
   );
   const pp = document.getElementById('preview-panel');
   if (pp) {
-    if (NO_PREVIEW_TABS.has(name)) pp.classList.add('hidden');
-    else pp.classList.remove('hidden');
+    if (PREVIEW_TABS.has(name)) pp.classList.remove('hidden');
+    else pp.classList.add('hidden');
   }
   if (name === 'rodape')    scrollPreviewToSection('site-footer');
   if (name === 'dashboard') initDashboard();
