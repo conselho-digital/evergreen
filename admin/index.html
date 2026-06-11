@@ -632,6 +632,8 @@
     }
     .dash-status { font-size: 12px; color: var(--text-dim); }
     .dash-kpi2-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .dash-main-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; margin-bottom: 12px; }
+    .dash-bottom3-row { display: grid; grid-template-columns: 1fr 1fr 1.6fr; gap: 12px; margin-bottom: 12px; }
     .dash-kpi2-card {
       background: var(--bg-mid); border: 1px solid var(--border);
       border-radius: 10px; padding: 16px 18px; overflow: hidden;
@@ -663,7 +665,7 @@
     .dash-b2-bar.y { background: #F5C400; }
     .dash-b2-bar.b { background: #42a5f5; }
     .dash-b2-lbl { font-size: 8.5px; color: var(--text-dim); margin-top: 6px; white-space: nowrap; }
-    .dash-wa2-wrap { height: 180px; overflow: hidden; }
+    .dash-wa2-wrap { height: 200px; overflow: hidden; }
     .dash-bottom2-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
     .dash-locais-card { background: var(--bg-mid); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
     .dash-locais-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
@@ -1175,7 +1177,7 @@
 
       <!-- DASHBOARD TAB -->
       <div id="tab-dashboard" class="tab-content active">
-        <div class="tab-centered">
+        <div class="tab-centered" style="max-width:1200px">
           <div class="sec-header">📊 Cloudflare Metrics</div>
 
           <!-- Setup prompt — shown when no Worker URL is configured -->
@@ -1207,7 +1209,7 @@
 
             <div id="dash-banner-error" class="dash-banner dash-banner-red" style="display:none"></div>
 
-            <!-- 2 large KPI cards with area sparklines -->
+            <!-- Row 1: KPI cards -->
             <div class="dash-kpi2-row">
               <div class="dash-kpi2-card">
                 <div class="dash-kpi2-top">
@@ -1227,22 +1229,25 @@
               </div>
             </div>
 
-            <div class="dash-section-card">
-              <span class="dash-section-title">VISITAS POR DIA</span>
-              <div class="dash-chart-legend2">
-                <span class="dash-legend-dot yellow"></span>&nbsp;Visitas únicas
-                <span class="dash-legend-dot blue" style="margin-left:12px"></span>&nbsp;Page Views
+            <!-- Row 2: Visitas + WA side by side -->
+            <div class="dash-main-grid">
+              <div class="dash-section-card dash-col-wide" style="margin-bottom:0">
+                <span class="dash-section-title">VISITAS POR DIA</span>
+                <div class="dash-chart-legend2">
+                  <span class="dash-legend-dot yellow"></span>&nbsp;Visitas únicas
+                  <span class="dash-legend-dot blue" style="margin-left:12px"></span>&nbsp;Page Views
+                </div>
+                <div class="dash-bar2-wrap" id="dash-bar2-chart"></div>
               </div>
-              <div class="dash-bar2-wrap" id="dash-bar2-chart"></div>
+              <div class="dash-section-card dash-col-narrow" id="dash-wa-section" style="margin-bottom:0">
+                <span class="dash-section-title">CLIQUES WHATSAPP POR DIA</span>
+                <div class="dash-wa2-wrap" id="dash-wa2-chart"></div>
+              </div>
             </div>
 
-            <div class="dash-section-card" id="dash-wa-section">
-              <span class="dash-section-title">CLIQUES WHATSAPP POR DIA</span>
-              <div class="dash-wa2-wrap" id="dash-wa2-chart"></div>
-            </div>
-
-            <div class="dash-bottom2-row">
-              <div class="dash-time2-card" id="dash-time-card" style="flex-direction:column;align-items:flex-start;justify-content:flex-start">
+            <!-- Row 3: Tempo + Dispositivos + Fotos -->
+            <div class="dash-bottom3-row">
+              <div class="dash-time2-card" id="dash-time-card" style="flex-direction:column;align-items:flex-start;justify-content:flex-start;margin-bottom:0">
                 <div class="dash-time2-label">TEMPO NA PÁGINA</div>
                 <div style="display:flex;align-items:baseline;gap:10px">
                   <div class="dash-time2-value" id="dash-time-value">—</div>
@@ -1250,19 +1255,17 @@
                 </div>
                 <div class="dash-time2-chart" id="dash-time-chart"></div>
               </div>
-              <div class="dash-devices2-card">
+              <div class="dash-devices2-card" style="margin-bottom:0">
                 <span class="dash-section-title">DISPOSITIVOS</span>
                 <div id="dash-devices2-legend" class="dash-devices2-legend"></div>
                 <div class="dash-donut-wrap">
                   <canvas id="dash-donut" width="110" height="110"></canvas>
                 </div>
               </div>
-            </div>
-
-            <!-- Fotos mais clicadas -->
-            <div class="dash-section-card" id="dash-photos-section">
-              <span class="dash-section-title">FOTOS MAIS CLICADAS</span>
-              <div id="dash-photos-list"></div>
+              <div class="dash-section-card" id="dash-photos-section" style="margin-bottom:0">
+                <span class="dash-section-title">FOTOS MAIS CLICADAS</span>
+                <div id="dash-photos-list"></div>
+              </div>
             </div>
 
             <div id="dash-empty" class="dash-empty" style="display:none">
