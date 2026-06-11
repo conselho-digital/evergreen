@@ -1371,6 +1371,7 @@ let quillBAIntro    = null;
 let quillSobre      = null;
 let _dashInitialized = false;
 let _dashPeriod      = 7;
+let _galleryMap      = {};  // label → src, loaded once
 
 /* ================================================================
    INSUMOS CONFIG
@@ -2605,6 +2606,10 @@ function initDashboard() {
   document.getElementById('dash-main').style.display  = '';
   if (!_dashInitialized) {
     _dashInitialized = true;
+    fetch('../gallery.json').then(r => r.ok ? r.json() : null).then(g => {
+      if (!g) return;
+      Object.values(g).flat().forEach(({ image, label }) => { if (label && image) _galleryMap[label] = image; });
+    }).catch(() => {});
     loadDashboardData(_dashPeriod);
   }
 }
@@ -2836,10 +2841,10 @@ function renderPhotoTop(items) {
   el.innerHTML = items.map(item => {
     const sep  = item.name.indexOf('|');
     const name = sep !== -1 ? item.name.slice(0, sep) : item.name;
-    const src  = sep !== -1 ? item.name.slice(sep + 1) : '';
+    const src  = (sep !== -1 ? item.name.slice(sep + 1) : '') || _galleryMap[name] || '';
     const pct  = Math.round((item.count / max) * 100);
     const thumb = src
-      ? `<img src="${src}" style="width:44px;height:34px;object-fit:cover;border-radius:4px;flex-shrink:0;border:1px solid rgba(255,255,255,.1)">`
+      ? `<img src="../${src.replace(/^\//, '')}" style="width:44px;height:34px;object-fit:cover;border-radius:4px;flex-shrink:0;border:1px solid rgba(255,255,255,.1)">`
       : `<div style="width:44px;height:34px;flex-shrink:0;background:rgba(255,255,255,.06);border-radius:4px"></div>`;
     return `<div class="dash-photo-row">
       ${thumb}
