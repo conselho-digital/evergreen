@@ -2643,6 +2643,9 @@ async function loadDashboardData(days, forceRefresh) {
   let   parsed   = null;
   if (raw) { try { parsed = JSON.parse(raw); } catch (_) {} }
 
+  // Bust cache if response is missing newer fields (e.g. photoTop added later)
+  if (parsed && !parsed.data?.events?.photoTop) { parsed = null; localStorage.removeItem(cacheKey); }
+
   if (parsed && (Date.now() - parsed._ts) < CACHE_MAX_MS) {
     renderDashboard(parsed.data, days);
     updateCacheBadge(parsed._ts);
