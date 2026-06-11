@@ -165,16 +165,20 @@
           });
         });
 
-        // ── Photo click tracking ────────────────────────────────
-        document.querySelectorAll('[data-photo]').forEach(el => {
-          el.addEventListener('click', () => {
-            fetch(workerUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ event: 'photo', value: el.getAttribute('data-photo') }),
-              keepalive: true,
-            }).catch(() => {});
-          });
+        // ── Photo click tracking (delegated — covers dynamic gallery items too)
+        document.addEventListener('click', e => {
+          const photoEl = e.target.closest('[data-photo]');
+          const galleryEl = !photoEl && e.target.closest('.gallery-item');
+          if (!photoEl && !galleryEl) return;
+          const name = photoEl
+            ? photoEl.getAttribute('data-photo')
+            : (galleryEl.querySelector('img')?.alt || 'gallery');
+          fetch(workerUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ event: 'photo', value: name }),
+            keepalive: true,
+          }).catch(() => {});
         });
 
         // ── Time on page tracking ───────────────────────────────
