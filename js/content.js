@@ -165,6 +165,18 @@
           });
         });
 
+        // ── Photo click tracking ────────────────────────────────
+        document.querySelectorAll('[data-photo]').forEach(el => {
+          el.addEventListener('click', () => {
+            fetch(workerUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ event: 'photo', value: el.getAttribute('data-photo') }),
+              keepalive: true,
+            }).catch(() => {});
+          });
+        });
+
         // ── Time on page tracking ───────────────────────────────
         const _pageStart = Date.now();
         let _lastPing    = 0;
