@@ -2721,7 +2721,7 @@ function renderDashboard(json, days) {
   document.getElementById('kpi-pageviews-chart').innerHTML = areaChart(daily.map(d => d.pageViews), dates, '#42a5f5', 'rgba(66,165,245,.22)');
 
   const timeCard = document.getElementById('dash-time-card');
-  if (events.time_avg != null) {
+  if (events.time_avg) {
     document.getElementById('dash-time-value').textContent = fmtTime(events.time_avg);
     timeCard.style.display = '';
   } else {
