@@ -217,7 +217,7 @@ body {
 /* ── Imagem de fundo ── */
 .hero-img-bg {
   position: absolute; inset: 0; z-index: 0;
-  background: url('../img/hero-bg.png') center center / cover no-repeat;
+  background: url('../img/hero-bg.webp') center center / cover no-repeat;
   filter: brightness(0.72);
 }
 @media (min-width: 769px) {
@@ -598,7 +598,7 @@ body {
   text-align: center;
   background:
     linear-gradient(180deg, rgba(5,20,10,.72) 0%, rgba(10,30,15,.58) 50%, rgba(5,20,10,.72) 100%),
-    url('../img/contato.jpg') center center / cover no-repeat;
+    url('../img/contato.webp') center center / cover no-repeat;
   border-top: 4px solid var(--green-accent); border-bottom: 4px solid var(--green-accent);
 }
 .cta-inner { max-width: 700px; margin: 0 auto; }
