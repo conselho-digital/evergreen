@@ -102,27 +102,27 @@
   },
   "insumos": {
     "fertilizantes": {
-      "src": "img/fertilizantes.png",
+      "src": "img/fertilizantes.webp",
       "title": "Corretivo de Solo",
       "text": "Solotrat equilibra o pH e condiciona o solo para a germinação rápida e uniforme"
     },
     "sementes": {
-      "src": "img/sementes.png",
+      "src": "img/sementes.webp",
       "title": "Sementes",
       "text": "Variedades certificadas de grama líquida para cada tipo de solo e bioma"
     },
     "mulches": {
-      "src": "img/mulches.png",
+      "src": "img/mulches.webp",
       "title": "Mulch de Fibra",
       "text": "Fibra de madeira + adubo orgânico que retém umidade e protege a biomembrana"
     },
     "fixadores": {
-      "src": "img/fixadores.png",
+      "src": "img/fixadores.webp",
       "title": "Fixador",
       "text": "Liga os componentes ao solo com resistência ao escoamento por chuvas e ventos"
     },
     "fibra": {
-      "src": "img/fibra-de-madeira.png",
+      "src": "img/fibra-de-madeira.webp",
       "title": "Adubo Orgânico",
       "text": "Nutrição natural de liberação lenta que sustenta o crescimento por semanas"
     }
@@ -134,44 +134,44 @@
   "processo": {
     "subtitle": "Como a hidrossemeadura age no solo e transforma áreas degradadas em tapetes verdes.",
     "step1": {
-      "src": "img/fases-aplicacao.png",
+      "src": "img/fases-aplicacao.webp",
       "title": "Formação da Capa Protetora",
       "text": "Quando o líquido é projetado no solo, a água evapora e os agentes colantes criam uma crosta porosa que protege as sementes contra erosão, chuvas e ventos."
     },
     "step2": {
-      "src": "img/fases-aplicado.png",
+      "src": "img/fases-aplicado.webp",
       "title": "Retenção de Umidade",
       "text": "As fibras orgânicas e aditivos funcionam como uma esponja, absorvendo e liberando gradualmente a água, criando o microclima ideal para despertar o embrião da semente."
     },
     "step3": {
-      "src": "img/solo-fases.png",
+      "src": "img/solo-fases.webp",
       "title": "Nutrição e Fixação Radicular",
       "text": "Os fertilizantes de liberação lenta fornecem nutrição contínua enquanto as raízes se fixam nas camadas do solo, garantindo cobertura permanente e controle de erosão."
     },
     "step4": {
-      "src": "img/nao-pise.png",
+      "src": "img/nao-pise.webp",
       "title": "Tapete Fechado",
       "text": "Em 30 dias a cobertura vegetal está consolidada. O solo protegido, as raízes fixadas e o tapete verde formado — sinal de que a hidrossemeadura cumpriu seu papel."
     }
   },
   "portfolio": {
     "taludes": {
-      "src": "img/portfolio-taludes.png",
+      "src": "img/portfolio-taludes.webp",
       "title": "Hidrossemeadura de Taludes",
       "text": "Estabilização de encostas com cobertura vegetal permanente e controle de erosão superficial"
     },
     "industrial": {
-      "src": "img/portfolio-industrial.png",
+      "src": "img/portfolio-industrial.webp",
       "title": "Restauração de Áreas Industriais",
       "text": "Recuperação de passivos ambientais em complexos industriais e minerários com foco ESG"
     },
     "urbanas": {
-      "src": "img/portfolio-urbanas.png",
+      "src": "img/portfolio-urbanas.webp",
       "title": "Revegetação de Zonas Urbanas",
       "text": "Criação de áreas verdes, paisagismo de rodovias e recuperação de margens de rios em ambiente urbano"
     },
     "erosao": {
-      "src": "img/portfolio-erosao.png",
+      "src": "img/portfolio-erosao.webp",
       "title": "Controle de Erosão Rural",
       "text": "Prevenção e recuperação de áreas erodidas em propriedades agrícolas e reservas legais"
     }
